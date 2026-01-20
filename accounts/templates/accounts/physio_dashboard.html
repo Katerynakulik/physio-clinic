@@ -1,6 +1,7 @@
-{% extends "base.html" %} {% block title %}Client Dashboard{% endblock %} {%
-block content %}
-<h1 class="mb-3">Client Dashboard</h1>
-
-<p>Welcome, <strong>{{ request.user.username }}</strong></p>
+{% extends "base.html" %} 
+{% block title %}Physiotherapist Dashboard{% endblock%} {% block content %}
+<div class="container mt-4">
+  <h1>Physiotherapist Dashboard</h1>
+  <p>Welcome, <strong>{{ request.user.username }}</strong></p>
+</div>
 {% endblock %}

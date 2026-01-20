@@ -1,0 +1,25 @@
+{% extends "base.html" %} {% block title %}Booking{% endblock %} {% block
+content %}
+<h1 class="mb-4">Book an appointment with {{ physiotherapist }}</h1>
+
+<div class="row">
+  {% for slot in slots %}
+  <div class="col-md-4 mb-3">
+    <div class="card">
+      <div class="card-body">
+        <p>
+          {{ slot.date }}<br />
+          {{ slot.start_time }} – {{ slot.end_time }}
+        </p>
+
+        <a href="{% url 'book_slot' slot.id %}" class="btn btn-primary">
+          Book
+        </a>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <p>No available slots.</p>
+  {% endfor %}
+</div>
+{% endblock %}

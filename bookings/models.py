@@ -1,25 +1,37 @@
 from django.db import models
-from accounts.models import ClientProfile, Physiotherapist
-# Booking model 
-class Booking(models.Model):
-    client = models.ForeignKey(ClientProfile, on_delete=models.CASCADE)
-    physiotherapist = models.ForeignKey(Physiotherapist, on_delete=models.CASCADE)
-    date = models.DateField()
-    time = models.TimeField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    is_cancelled = models.BooleanField(default=False)
+from django.conf import settings
+from accounts.models import Physiotherapist
 
-    def __str__(self):
-        return f"{self.client} - {self.date} {self.time}"
-    
 
-class BlockedSlot(models.Model):
+class BookingSlot(models.Model):
+    """
+    Represents a single bookable time slot
+    for a physiotherapist.
+    """
+
     physiotherapist = models.ForeignKey(
         Physiotherapist,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name="slots"
     )
+
     date = models.DateField()
-    time = models.TimeField()
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+
+    is_booked = models.BooleanField(default=False)
+
+    client = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="bookings"
+    )
+
+    class Meta:
+        ordering = ["date", "start_time"]
+        unique_together = ("physiotherapist", "date", "start_time")
 
     def __str__(self):
-        return f"Blocked {self.date} {self.time}"
+        return f"{self.physiotherapist} | {self.date} {self.start_time}"

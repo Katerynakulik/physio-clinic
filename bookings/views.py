@@ -1,39 +1,49 @@
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
-from .models import Booking
-from accounts.utils import is_client
+from accounts.models import Physiotherapist
+from .models import BookingSlot
 
-
-# Client creates booking
 
 @login_required
-def create_booking(request, physio_id):
-    if not is_client(request.user):
-        return redirect('login')
+def booking_page(request, physio_id):
+    """
+    Display available booking slots
+    for a selected physiotherapist.
+    """
 
-    if request.method == 'POST':
-        Booking.objects.create(
-            client=request.user.clientprofile,
-            physiotherapist_id=physio_id,
-            date=request.POST['date'],
-            time=request.POST['time']
-        )
-        return redirect('client_dashboard')
+    physiotherapist = get_object_or_404(
+        Physiotherapist, id=physio_id
+    )
 
-    return render(request, 'bookings/create.html')
+    slots = BookingSlot.objects.filter(
+        physiotherapist=physiotherapist,
+        is_booked=False
+    )
 
+    return render(
+        request,
+        "bookings/booking_page.html",
+        {
+            "physiotherapist": physiotherapist,
+            "slots": slots
+        }
+    )
 
-# Physiotherapist blocks slots
 
 @login_required
-def block_slot(request):
-    if not hasattr(request.user, 'physiotherapist'):
-        return redirect('login')
+def book_slot(request, slot_id):
+    """
+    Book a specific slot for the logged-in client.
+    """
 
-    if request.method == 'POST':
-        BlockedSlot.objects.create(
-            physiotherapist=request.user.physiotherapist,
-            date=request.POST['date'],
-            time=request.POST['time']
-        )
-        return redirect('physio_dashboard')
+    slot = get_object_or_404(
+        BookingSlot,
+        id=slot_id,
+        is_booked=False
+    )
+
+    slot.is_booked = True
+    slot.client = request.user
+    slot.save()
+
+    return redirect("client_dashboard")
