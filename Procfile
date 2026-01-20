@@ -1,1 +1,1 @@
-web: gunicorn phisio-clinic.wsgi
+web: gunicorn phisio_clinic.wsgi
