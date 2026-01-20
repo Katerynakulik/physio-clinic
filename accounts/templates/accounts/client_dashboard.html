@@ -1,4 +1,22 @@
 {% extends "base.html" %} {% block content %}
-<h1>Client Dashboard</h1>
-<p>Welcome, {{ request.user.username }}</p>
+
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h1 class="card-title">Client Dashboard</h1>
+    <p class="card-text">
+      Welcome, <strong>{{ request.user.username }}</strong>
+    </p>
+
+    <hr />
+
+    <p class="text-muted">From here you will be able to:</p>
+
+    <ul>
+      <li>View upcoming appointments</li>
+      <li>Create a new booking</li>
+      <li>Manage your profile</li>
+    </ul>
+  </div>
+</div>
+
 {% endblock %}
