@@ -7,6 +7,9 @@ from django.http import HttpResponseForbidden
 from .forms import ClientRegistrationForm
 from .models import ClientProfile
 
+from django.utils import timezone
+from bookings.models import BookingSlot
+
 def register_client(request):
     """
     Register a new client user and redirect
@@ -24,17 +27,25 @@ def register_client(request):
 
     return render(request, "accounts/register.html", {"form": form})
 
-@login_required
 
+
+@login_required
 def client_dashboard(request):
     """
     Dashboard page for logged-in clients.
-    Accessible only for users with ClientProfile.
+    Shows future booked appointments.
     """
     if not hasattr(request.user, "clientprofile"):
         return HttpResponseForbidden("Access denied")
 
-    return render(request, "accounts/client_dashboard.html")
+    upcoming = BookingSlot.objects.filter(
+        client=request.user,
+        status=BookingSlot.STATUS_BOOKED,
+        date__gte=timezone.now().date(),
+    ).order_by("date", "start_time")
+
+    return render(request, "accounts/client_dashboard.html", {"upcoming": upcoming})
+
 
 @login_required
 def physio_dashboard(request):

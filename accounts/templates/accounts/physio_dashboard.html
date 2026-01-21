@@ -1,7 +1,55 @@
-{% extends "base.html" %} 
-{% block title %}Physiotherapist Dashboard{% endblock%} {% block content %}
-<div class="container mt-4">
-  <h1>Physiotherapist Dashboard</h1>
-  <p>Welcome, <strong>{{ request.user.username }}</strong></p>
-</div>
+{% extends "base.html" %}
+
+{% block title %}
+Physiotherapist Dashboard
+{% endblock %}
+
+{% block content %}
+<section class="mb-4">
+  <h1 class="mb-2">Physiotherapist Dashboard</h1>
+  <p class="text-muted mb-0">
+    Welcome, <strong>{{ request.user.get_full_name|default:request.user.username }}</strong>.
+  </p>
+</section>
+
+<section class="row g-3">
+  <div class="col-md-6">
+    <article class="card h-100 shadow-sm">
+      <div class="card-body">
+        <h2 class="h5 card-title mb-2">My Schedule</h2>
+        <p class="card-text text-muted">
+          View upcoming slots, see booked appointments, and block time periods (vacation, lunch, holiday).
+        </p>
+        <a class="btn btn-primary" href="{% url 'physio_schedule' %}">
+          Open schedule
+        </a>
+      </div>
+    </article>
+  </div>
+
+  <div class="col-md-6">
+    <article class="card h-100 shadow-sm">
+      <div class="card-body">
+        <h2 class="h5 card-title mb-2">Quick info</h2>
+
+        {% if request.user.physiotherapist %}
+          <ul class="list-unstyled mb-0">
+            <li>
+              <strong>Specialization:</strong>
+              {{ request.user.physiotherapist.specialization }}
+            </li>
+            <li>
+              <strong>Working hours:</strong>
+              {{ request.user.physiotherapist.working_from }} – {{ request.user.physiotherapist.working_to }}
+            </li>
+          </ul>
+        {% else %}
+          <p class="text-muted mb-0">
+            Profile data is not available.
+          </p>
+        {% endif %}
+      </div>
+    </article>
+  </div>
+</section>
 {% endblock %}
