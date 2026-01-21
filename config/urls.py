@@ -2,9 +2,14 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('accounts/', include('accounts.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),
-    path("booking/", include("bookings.urls")),
+    path("admin/", admin.site.urls),
 
+    # Public pages
+    path("", include("clinic.urls")),
+
+    # Accounts (custom login/logout/redirects)
+    path("accounts/", include("accounts.urls")),
+
+    # Booking
+    path("booking/", include("bookings.urls")),
 ]

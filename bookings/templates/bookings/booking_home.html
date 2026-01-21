@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Booking{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Choose a physiotherapist</h1>
+
+<div class="list-group">
+  {% for physio in physiotherapists %}
+    <a class="list-group-item list-group-item-action"
+       href="{% url 'booking_page' physio.id %}">
+      {{ physio }}
+    </a>
+  {% empty %}
+    <p>No physiotherapists available.</p>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,15 +1,8 @@
 from django.urls import path
-from .views import booking_page, book_slot
+from . import views
 
 urlpatterns = [
-    path(
-        "physio/<int:physio_id>/",
-        booking_page,
-        name="booking_page"
-    ),
-    path(
-        "slot/<int:slot_id>/book/",
-        book_slot,
-        name="book_slot"
-    ),
+    path("", views.booking_home, name="booking_home"),
+    path("physio/<int:physio_id>/", views.booking_page, name="booking_page"),
+    path("slot/<int:slot_id>/book/", views.book_slot, name="book_slot"),
 ]

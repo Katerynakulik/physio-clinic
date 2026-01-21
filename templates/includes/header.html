@@ -1,3 +1,5 @@
+{% load account_roles %}
+
 <header>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
@@ -21,7 +23,7 @@
 
           {% if user.is_authenticated %}
 
-            {% if user.clientprofile %}
+            {% if user|has_client_profile %}
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'client_dashboard' %}">
                   My Dashboard
@@ -29,7 +31,7 @@
               </li>
             {% endif %}
 
-            {% if user.physiotherapist %}
+            {% if user|has_physio_profile %}
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'physio_dashboard' %}">
                   Physio Dashboard
@@ -38,25 +40,28 @@
             {% endif %}
 
             <li class="nav-item">
-              <form method="post" action="{% url 'logout' %}">
+              <form method="post" action="{% url 'logout' %}" class="d-inline">
                 {% csrf_token %}
-                <button class="btn btn-link nav-link p-0">
+                <button type="submit" class="btn btn-link nav-link p-0">
                   Logout
                 </button>
               </form>
             </li>
 
           {% else %}
+
             <li class="nav-item">
               <a class="nav-link" href="{% url 'login' %}">
                 Login
               </a>
             </li>
+
             <li class="nav-item">
               <a class="nav-link" href="{% url 'register' %}">
                 Register
               </a>
             </li>
+
           {% endif %}
 
         </ul>

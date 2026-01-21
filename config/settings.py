@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'bookings',
+    "clinic",
 ]
 
 MIDDLEWARE = [
@@ -118,5 +119,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Redirection
 
 LOGIN_REDIRECT_URL = "/accounts/dashboard/"
-LOGOUT_REDIRECT_URL = "/accounts/login/"
+LOGOUT_REDIRECT_URL = "/"
 LOGIN_URL = "/accounts/login/"
