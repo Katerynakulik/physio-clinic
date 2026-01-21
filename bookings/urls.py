@@ -6,6 +6,8 @@ urlpatterns = [
     path("", views.booking_home, name="booking_home"),
     path("physio/<int:physio_id>/", views.booking_page, name="booking_page"),
     path("slot/<int:slot_id>/book/", views.book_slot, name="book_slot"),
+    path("slot/<int:slot_id>/cancel/", views.cancel_booking, name="cancel_booking"),
+
 
     # Physiotherapist schedule (role-protected)
     path("physio/schedule/", views_physio.physio_schedule, name="physio_schedule"),

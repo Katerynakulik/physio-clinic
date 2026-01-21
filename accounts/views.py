@@ -10,6 +10,10 @@ from .models import ClientProfile
 from django.utils import timezone
 from bookings.models import BookingSlot
 
+
+
+
+
 def register_client(request):
     """
     Register a new client user and redirect

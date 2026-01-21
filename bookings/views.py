@@ -6,7 +6,9 @@ from django.utils import timezone
 from accounts.models import Physiotherapist
 from .models import BookingSlot
 from .utils import ensure_slots_for_physio
-
+from django.utils import timezone
+from django.http import HttpResponseForbidden
+from django.utils import timezone
 
 @login_required
 def booking_home(request):
@@ -45,27 +47,72 @@ def booking_page(request, physio_id):
 @login_required
 def book_slot(request, slot_id):
     """
-    Book a specific available slot (POST only).
-    Client may provide an optional note.
+    Book a specific available slot for the logged-in client.
+    Booking is allowed only for future time slots.
     """
+    # Only POST requests are allowed
     if request.method != "POST":
         return redirect("booking_home")
 
-    # Only clients can book
+    # Only users with ClientProfile can book slots
     if not hasattr(request.user, "clientprofile"):
         return HttpResponseForbidden("Access denied")
 
+    # Get the slot only if it is still available
     slot = get_object_or_404(
         BookingSlot,
         id=slot_id,
         status=BookingSlot.STATUS_AVAILABLE
     )
 
+    # Current local date and time
+    now = timezone.localtime()
+
+    # Disallow booking slots in the past
+    if slot.date < now.date():
+        return redirect("booking_page", physio_id=slot.physiotherapist.id)
+
+    if slot.date == now.date() and slot.start_time <= now.time():
+        return redirect("booking_page", physio_id=slot.physiotherapist.id)
+
+    # Optional client note from the form
     client_note = (request.POST.get("client_note") or "").strip()
 
+    # Book the slot
     slot.status = BookingSlot.STATUS_BOOKED
     slot.client = request.user
     slot.client_note = client_note
+    slot.save()
+
+    return redirect("client_dashboard")
+
+login_required
+def cancel_booking(request, slot_id):
+    if request.method != "POST":
+        return redirect("client_dashboard")
+
+    
+    slot = get_object_or_404(
+        BookingSlot, 
+        id=slot_id, 
+        client=request.user,
+        status='booked' 
+    )
+
+    now = timezone.localtime()
+    
+    
+    if slot.date < now.date() or (slot.date == now.date() and slot.start_time <= now.time()):
+                return redirect("client_dashboard")
+
+   
+    slot.status = 'available' 
+    slot.client = None
+    slot.client_note = ""
+       
+    if hasattr(slot, 'is_booked'):
+        slot.is_booked = False
+        
     slot.save()
 
     return redirect("client_dashboard")

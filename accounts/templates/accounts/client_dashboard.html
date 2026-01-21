@@ -20,6 +20,14 @@
         <td>{{ slot.start_time }} – {{ slot.end_time }}</td>
         <td>{{ slot.physiotherapist }}</td>
         <td class="text-muted">{{ slot.client_note|default:"—" }}</td>
+        <td>
+        <form method="post" action="{% url 'cancel_booking' slot.id %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-sm btn-outline-danger">
+            Cancel
+          </button>
+        </form>
+      </td>
       </tr>
     {% empty %}
       <tr><td colspan="4" class="text-muted">No upcoming appointments.</td></tr>
