@@ -1,8 +1,13 @@
 from django.urls import path
 from . import views
+from . import views_physio
 
 urlpatterns = [
     path("", views.booking_home, name="booking_home"),
     path("physio/<int:physio_id>/", views.booking_page, name="booking_page"),
     path("slot/<int:slot_id>/book/", views.book_slot, name="book_slot"),
+
+    # Physiotherapist schedule (role-protected)
+    path("physio/schedule/", views_physio.physio_schedule, name="physio_schedule"),
+    path("physio/slot/<int:slot_id>/block/", views_physio.block_slot, name="block_slot"),
 ]

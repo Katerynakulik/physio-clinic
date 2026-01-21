@@ -1,25 +1,31 @@
-{% extends "base.html" %} {% block title %}Booking{% endblock %} {% block
-content %}
-<h1 class="mb-4">Book an appointment with {{ physiotherapist }}</h1>
+{% extends "base.html" %} {% block title %}Booking{% endblock %} 
+
+{% block content %}
+<h1 class="mb-4">Book with {{ physiotherapist }}</h1>
 
 <div class="row">
   {% for slot in slots %}
-  <div class="col-md-4 mb-3">
-    <div class="card">
-      <div class="card-body">
-        <p>
-          {{ slot.date }}<br />
-          {{ slot.start_time }} – {{ slot.end_time }}
-        </p>
+    <div class="col-md-4 mb-3">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <p class="mb-2">
+            <strong>{{ slot.date }}</strong><br>
+            {{ slot.start_time }} – {{ slot.end_time }}
+          </p>
 
-        <a href="{% url 'book_slot' slot.id %}" class="btn btn-primary">
-          Book
-        </a>
+          <form method="post" action="{% url 'book_slot' slot.id %}">
+            {% csrf_token %}
+            <div class="mb-2">
+              <label class="form-label">Comment (optional)</label>
+              <textarea name="client_note" class="form-control" rows="2"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Book</button>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
   {% empty %}
-  <p>No available slots.</p>
+    <p>No available slots.</p>
   {% endfor %}
 </div>
 {% endblock %}
