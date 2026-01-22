@@ -17,6 +17,12 @@ class Physiotherapist(models.Model):
     short_description = models.CharField(max_length=200, blank=True)
     bio = models.TextField(blank=True)
 
+    photo = models.ImageField(
+        upload_to="physiotherapists/",
+        blank=True,
+        null=True
+    )
+
     working_from = models.TimeField()
     working_to = models.TimeField()
 
@@ -24,3 +30,4 @@ class Physiotherapist(models.Model):
 
     def __str__(self):
         return self.user.get_full_name()
+

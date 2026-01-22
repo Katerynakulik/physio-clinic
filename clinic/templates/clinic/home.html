@@ -15,22 +15,27 @@
     {% for physio in physiotherapists %}
       <div class="col-md-4 mb-3">
         <article class="card h-100 shadow-sm">
+          {% if physio.photo %}
+            <img
+              src="{{ physio.photo.url }}"
+              class="card-img-top"
+              alt="{{ physio }} portrait"
+            >
+          {% endif %}
+
           <div class="card-body">
             <h2 class="h5 card-title">{{ physio }}</h2>
 
             <p class="card-text text-muted mb-2">
-              <!-- Adjust fields below to match your Physiotherapist model -->
-              <strong>Specialization:</strong>
-              {{ physio.specialization|default:"Physiotherapy" }}
+              <strong>Specialization:</strong> {{ physio.specialization }}
             </p>
 
             <p class="card-text">
-              {{ physio.short_description|default:"Experienced physiotherapist ready to help you recover and stay healthy." }}
+              {{ physio.short_description }}
             </p>
 
-            <!-- Optional: button to physio-specific booking page -->
             <a class="btn btn-outline-primary btn-sm"
-               href="{% url 'booking_page' physio.id %}">
+              href="{% url 'booking_page' physio.id %}">
               View available slots
             </a>
           </div>
