@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Home{% endblock %}
 
@@ -16,11 +17,20 @@
       <div class="col-md-4 mb-3">
         <article class="card h-100 shadow-sm">
           {% if physio.photo %}
-            <img
-              src="{{ physio.photo.url }}"
-              class="card-img-top"
-              alt="{{ physio }} portrait"
-            >
+           {% if physio.photo_static_path %}
+              <img
+                src="{% static physio.photo_static_path %}"
+                class="card-img-top"
+                alt="{{ physio }} portrait"
+              >
+            {% elif physio.photo %}
+              {# Local dev fallback if you still use MEDIA locally #}
+              <img
+                src="{{ physio.photo.url }}"
+                class="card-img-top"
+                alt="{{ physio }} portrait"
+              >
+            {% endif %}
           {% endif %}
 
           <div class="card-body">
