@@ -16,10 +16,10 @@ STATICFILES_DIRS = [
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY", "dev-only-secret-key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG") == "True"
+DEBUG = os.environ.get("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = ['physio-clinic.herokuapp.com', '127.0.0.1', 'localhost',]
 
@@ -46,6 +46,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -74,7 +75,9 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.parse(os.getenv("DATABASE_URL"))
+    "default": dj_database_url.config(
+        default=os.environ.get("DATABASE_URL")
+    )
 }
 
 
@@ -112,7 +115,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
