@@ -1,0 +1,20 @@
+/* Django form help text styling */
+form p {
+  display: flex;
+  flex-direction: column;
+}
+
+form p input,
+form p select,
+form p textarea {
+  margin-bottom: 0.25rem;
+}
+
+form p .helptext,
+form p small,
+form p span {
+  font-size: 0.7rem; /* ~30% smaller */
+  color: #6c757d; /* Bootstrap muted */
+  display: block;
+  margin-top: 0.25rem;
+}
