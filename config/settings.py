@@ -8,9 +8,6 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -21,7 +18,12 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "dev-only-secret-key")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ['physio-clinic.herokuapp.com', '127.0.0.1', 'localhost',]
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    ".herokuapp.com",
+]
+CSRF_TRUSTED_ORIGINS = ["https://*.herokuapp.com"]
 
 
 # Application definition
@@ -39,14 +41,14 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -76,9 +78,10 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     "default": dj_database_url.config(
-        default=os.environ.get("DATABASE_URL")
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}"
     )
 }
+
 
 
 # Password validation
@@ -133,3 +136,7 @@ LOGOUT_REDIRECT_URL = "/"
 LOGIN_URL = "/accounts/login/"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.herokuapp.com",
+]
