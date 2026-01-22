@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load account_roles %}
+
 
 {% block title %}
 Physiotherapist Dashboard
@@ -32,7 +34,7 @@ Physiotherapist Dashboard
       <div class="card-body">
         <h2 class="h5 card-title mb-2">Quick info</h2>
 
-        {% if request.user.physiotherapist %}
+        {% if request.user|has_physio_profile %}
           <ul class="list-unstyled mb-0">
             <li>
               <strong>Specialization:</strong>
@@ -52,4 +54,74 @@ Physiotherapist Dashboard
     </article>
   </div>
 </section>
+
+<section class="card shadow-sm mt-4">
+  <div class="card-body">
+    <h2 class="h5 mb-3">Upcoming Slots</h2>
+
+    <div class="table-responsive">
+      <table class="table table-striped align-middle">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+            <th>Client / Note</th>
+            <th style="width: 180px;">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for slot in slots %}
+            <tr>
+              <td>{{ slot.date }}</td>
+              <td>{{ slot.start_time }} – {{ slot.end_time }}</td>
+
+              <td>
+                {% if slot.status == "booked" %}
+                  <span class="badge bg-primary">Booked</span>
+                {% elif slot.status == "blocked" %}
+                  <span class="badge bg-danger">Blocked</span>
+                {% else %}
+                  <span class="badge bg-success">Available</span>
+                {% endif %}
+              </td>
+
+              <td>
+                {% if slot.status == "booked" %}
+                  <div><strong>{{ slot.client.get_username }}</strong></div>
+                  {% if slot.client_note %}
+                    <div class="text-muted">{{ slot.client_note }}</div>
+                  {% endif %}
+                {% elif slot.status == "blocked" %}
+                  <div class="text-muted">{{ slot.blocked_reason|default:"—" }}</div>
+                {% else %}
+                  <span class="text-muted">—</span>
+                {% endif %}
+              </td>
+
+              <td>
+                {% if slot.status == "booked" %}
+                  <form method="post" action="{% url 'cancel_booking_physio' slot.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                      Cancel
+                    </button>
+                  </form>
+                {% else %}
+                  <span class="text-muted">—</span>
+                {% endif %}
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="5" class="text-muted">No upcoming slots found.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
 {% endblock %}

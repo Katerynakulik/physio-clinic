@@ -59,9 +59,17 @@ def physio_dashboard(request):
     """
     if not hasattr(request.user, "physiotherapist"):
         return HttpResponseForbidden("Access denied")
+    physio = request.user.physiotherapist
+    slots = BookingSlot.objects.filter(
+        physiotherapist=physio,
+        date__gte=timezone.localdate(),
+    ).order_by("date", "start_time")
 
-    return render(request, "accounts/physio_dashboard.html")
-
+    return render(
+        request,
+        "accounts/physio_dashboard.html",
+        {"slots": slots}, 
+    )
 class RoleBasedLoginView(LoginView):
     """
     Custom login view that redirects users

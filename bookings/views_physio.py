@@ -55,3 +55,39 @@ def block_slot(request, slot_id):
     slot.save()
 
     return redirect("physio_schedule")
+
+@login_required
+def cancel_booking_physio(request, slot_id):
+    """
+    Allow a physiotherapist to cancel a booked slot in their own schedule (POST only).
+    The slot becomes available again.
+    """
+    if request.method != "POST":
+        return redirect("physio_dashboard")
+
+    if not hasattr(request.user, "physiotherapist"):
+        return HttpResponseForbidden("Access denied")
+
+    physio = request.user.physiotherapist
+
+    slot = get_object_or_404(
+        BookingSlot,
+        id=slot_id,
+        physiotherapist=physio,
+        status=BookingSlot.STATUS_BOOKED,
+    )
+
+    # Optional: prevent cancelling past appointments
+    now = timezone.localtime()
+    if slot.date < now.date():
+        return redirect("physio_dashboard")
+    if slot.date == now.date() and slot.start_time <= now.time():
+        return redirect("physio_dashboard")
+
+    # Cancel booking: reset to available
+    slot.status = BookingSlot.STATUS_AVAILABLE
+    slot.client = None
+    slot.client_note = ""
+    slot.save()
+
+    return redirect("physio_dashboard")
