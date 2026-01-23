@@ -46,6 +46,7 @@ class BookingSlot(models.Model):
         blank=True,
         related_name="bookings"
     )
+    physio_note = models.CharField(max_length=255, blank=True)
 
     # Optional note entered by the client during booking (visible to physio & client)
     client_note = models.TextField(blank=True)

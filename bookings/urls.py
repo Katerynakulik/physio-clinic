@@ -13,4 +13,6 @@ urlpatterns = [
     path("physio/schedule/", views_physio.physio_schedule, name="physio_schedule"),
     path("physio/slot/<int:slot_id>/block/", views_physio.block_slot, name="block_slot"),
     path("physio/slot/<int:slot_id>/cancel/", views_physio.cancel_booking_physio, name="cancel_booking_physio"),
+    path("slot/<int:slot_id>/note/", views.update_physio_note, name="update_physio_note"),
+
 ]

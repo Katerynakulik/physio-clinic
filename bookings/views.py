@@ -1,14 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseForbidden
-from django.utils import timezone
 
 from accounts.models import Physiotherapist
 from .models import BookingSlot
 from .utils import ensure_slots_for_physio
-from django.utils import timezone
 from django.http import HttpResponseForbidden
 from django.utils import timezone
+from django.contrib import messages
 
 @login_required
 def booking_home(request):
@@ -86,8 +84,10 @@ def book_slot(request, slot_id):
 
     return redirect("client_dashboard")
 
+
 login_required
 def cancel_booking(request, slot_id):
+
     if request.method != "POST":
         return redirect("client_dashboard")
 
@@ -116,3 +116,28 @@ def cancel_booking(request, slot_id):
     slot.save()
 
     return redirect("client_dashboard")
+
+@login_required
+def update_physio_note(request, slot_id):
+    """
+    Allow physiotherapists to update a note on a booked slot.
+    """
+    if not hasattr(request.user, "physiotherapist"):
+        return HttpResponseForbidden("Access denied")
+
+    slot = get_object_or_404(BookingSlot, id=slot_id)
+
+    # Ensure physio can only edit their own slots
+    if slot.physiotherapist.user != request.user:
+        return HttpResponseForbidden("Access denied")
+
+    if request.method == "POST":
+        note = (request.POST.get("physio_note") or "").strip()
+        slot.physio_note = note
+        slot.save()
+        messages.success(request, "Note updated.")
+    else:
+        messages.warning(request, "Invalid request method.")
+
+    # Return to physio dashboard or schedule page
+    return redirect("physio_dashboard")
