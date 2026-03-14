@@ -41,11 +41,11 @@ def physio_schedule(request):
 def create_slot(request):
     """
     Manually create a single booking slot (CRUD: Create).
-    Allows adding specific hours outside the automated generation logic.
     """
     physio = request.user.physiotherapist
     if request.method == "POST":
-        form = BookingSlotForm(request.POST)
+        # ПЕРЕДАЄМО фізіотерапевта у форму
+        form = BookingSlotForm(request.POST, physiotherapist=physio)
         if form.is_valid():
             slot = form.save(commit=False)
             slot.physiotherapist = physio
@@ -53,7 +53,8 @@ def create_slot(request):
             messages.success(request, "New slot created successfully!")
             return redirect("physio_schedule")
     else:
-        form = BookingSlotForm()
+        # ПЕРЕДАЄМО фізіотерапевта у форму навіть для порожньої форми
+        form = BookingSlotForm(physiotherapist=physio)
     
     return render(
         request, 

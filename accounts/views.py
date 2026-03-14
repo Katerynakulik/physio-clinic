@@ -9,29 +9,21 @@ from .models import ClientProfile
 
 from django.utils import timezone
 from bookings.models import BookingSlot
-
-
-
-
+from django.contrib import messages
 
 def register_client(request):
-    """
-    Register a new client user and redirect
-    to client dashboard after successful signup.
-    """
     if request.method == "POST":
         form = ClientRegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
             ClientProfile.objects.create(user=user)
             login(request, user)
+            # Senior touch: Personalized success message
+            messages.success(request, f"Welcome to our clinic, {user.first_name}!")
             return redirect("client_dashboard")
     else:
         form = ClientRegistrationForm()
-
     return render(request, "accounts/register.html", {"form": form})
-
-
 
 @login_required
 def client_dashboard(request):
@@ -84,6 +76,8 @@ class RoleBasedLoginView(LoginView):
         depending on user type.
         """
         user = self.request.user
+        # Welcome message on login
+        messages.info(self.request, f"Welcome back, {user.first_name}!")
 
         # Client users
         if hasattr(user, "clientprofile"):
