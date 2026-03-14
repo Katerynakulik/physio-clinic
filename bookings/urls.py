@@ -11,8 +11,12 @@ urlpatterns = [
 
     # Physiotherapist schedule (role-protected)
     path("physio/schedule/", views_physio.physio_schedule, name="physio_schedule"),
+    path("physio/slot/add/", views_physio.create_slot, name="create_slot"),  # NEW: Create
+    path("physio/slot/<int:slot_id>/delete/", views_physio.delete_slot, name="delete_slot"),  # NEW: Delete
     path("physio/slot/<int:slot_id>/block/", views_physio.block_slot, name="block_slot"),
     path("physio/slot/<int:slot_id>/cancel/", views_physio.cancel_booking_physio, name="cancel_booking_physio"),
+    
+    # Notes
     path("slot/<int:slot_id>/note/", views.update_physio_note, name="update_physio_note"),
 
 ]
