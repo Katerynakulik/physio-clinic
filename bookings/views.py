@@ -8,12 +8,14 @@ from django.http import HttpResponseForbidden
 from django.utils import timezone
 from django.contrib import messages
 
+
 @login_required
 def booking_home(request):
     """
     Show a list of physiotherapists to start a booking.
     """
-    physiotherapists = Physiotherapist.objects.filter(is_active=True) if hasattr(Physiotherapist, "is_active") else Physiotherapist.objects.all()
+    physiotherapists = Physiotherapist.objects.filter(is_active=True) if hasattr(
+        Physiotherapist, "is_active") else Physiotherapist.objects.all()
     return render(request, "bookings/booking_home.html", {"physiotherapists": physiotherapists})
 
 
@@ -86,36 +88,36 @@ def book_slot(request, slot_id):
 
 
 login_required
+
+
 def cancel_booking(request, slot_id):
 
     if request.method != "POST":
         return redirect("client_dashboard")
 
-    
     slot = get_object_or_404(
-        BookingSlot, 
-        id=slot_id, 
+        BookingSlot,
+        id=slot_id,
         client=request.user,
-        status='booked' 
+        status='booked'
     )
 
     now = timezone.localtime()
-    
-    
-    if slot.date < now.date() or (slot.date == now.date() and slot.start_time <= now.time()):
-                return redirect("client_dashboard")
 
-   
-    slot.status = 'available' 
+    if slot.date < now.date() or (slot.date == now.date() and slot.start_time <= now.time()):
+        return redirect("client_dashboard")
+
+    slot.status = 'available'
     slot.client = None
     slot.client_note = ""
-       
+
     if hasattr(slot, 'is_booked'):
         slot.is_booked = False
-        
+
     slot.save()
 
     return redirect("client_dashboard")
+
 
 @login_required
 def update_physio_note(request, slot_id):

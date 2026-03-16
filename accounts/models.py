@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class ClientProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = models.CharField(max_length=20, blank=True)
@@ -10,18 +11,16 @@ class ClientProfile(models.Model):
         return self.user.email
 
 
-
 class Physiotherapist(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     specialization = models.CharField(max_length=100)
-   
 
     short_description = models.CharField(max_length=200, blank=True)
     bio = models.TextField(blank=True)
 
-    
     # optional ImageField can stay if you want it for local dev
-    photo = models.ImageField(upload_to="physiotherapists/", blank=True, null=True)
+    photo = models.ImageField(
+        upload_to="physiotherapists/", blank=True, null=True)
 
     # static fallback for Heroku (recommended)
     photo_static_path = models.CharField(max_length=255, blank=True)
@@ -33,4 +32,3 @@ class Physiotherapist(models.Model):
 
     def __str__(self):
         return self.user.get_full_name()
-

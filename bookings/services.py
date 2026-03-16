@@ -3,6 +3,7 @@ from .models import Booking, BlockedSlot
 
 # Slot availability service
 
+
 def generate_daily_slots():
     start = time(9, 0)
     end = time(18, 0)

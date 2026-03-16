@@ -1,14 +1,15 @@
 from django import forms
 from django.contrib.auth.models import User
 
+
 class ClientRegistrationForm(forms.ModelForm):
     first_name = forms.CharField(
-        max_length=30, 
-        required=True, 
+        max_length=30,
+        required=True,
         help_text='Required. Please enter your real name.'
     )
     last_name = forms.CharField(
-        max_length=30, 
+        max_length=30,
         required=True
     )
     password = forms.CharField(widget=forms.PasswordInput)

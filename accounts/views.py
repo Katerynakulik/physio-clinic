@@ -11,6 +11,7 @@ from django.utils import timezone
 from bookings.models import BookingSlot
 from django.contrib import messages
 
+
 def register_client(request):
     if request.method == "POST":
         form = ClientRegistrationForm(request.POST)
@@ -19,11 +20,13 @@ def register_client(request):
             ClientProfile.objects.create(user=user)
             login(request, user)
             # Senior touch: Personalized success message
-            messages.success(request, f"Welcome to our clinic, {user.first_name}!")
+            messages.success(
+                request, f"Welcome to our clinic, {user.first_name}!")
             return redirect("client_dashboard")
     else:
         form = ClientRegistrationForm()
     return render(request, "accounts/register.html", {"form": form})
+
 
 @login_required
 def client_dashboard(request):
@@ -60,8 +63,10 @@ def physio_dashboard(request):
     return render(
         request,
         "accounts/physio_dashboard.html",
-        {"slots": slots}, 
+        {"slots": slots},
     )
+
+
 class RoleBasedLoginView(LoginView):
     """
     Custom login view that redirects users

@@ -3,84 +3,100 @@
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1>My Schedule</h1>
-    <a href="{% url 'create_slot' %}" class="btn btn-primary">
-        <i class="fas fa-plus"></i> Add Manual Slot
-    </a>
+  <h1>My Schedule</h1>
+  <a href="{% url 'create_slot' %}" class="btn btn-primary">
+    <i class="fas fa-plus"></i> Add Manual Slot
+  </a>
 </div>
 
 {% if messages %}
-    {% for message in messages %}
-        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-            {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    {% endfor %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+  {{ message }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
 {% endif %}
 
 <div class="table-responsive">
-    <table class="table table-hover align-middle">
-      <thead class="table-light">
-        <tr>
-          <th>Date</th>
-          <th>Time</th>
-          <th>Status</th>
-          <th>Client / Notes</th>
-          <th>Manage Status</th>
-          <th>Remove</th> </tr>
-      </thead>
-      <tbody>
-        {% for slot in slots %}
-          <tr {% if slot.status == 'booked' %}class="table-info"{% endif %}>
-            <td>{{ slot.date }}</td>
-            <td>{{ slot.start_time }} – {{ slot.end_time }}</td>
-            <td>
-              <span class="badge {% if slot.status == 'booked' %}bg-primary{% elif slot.status == 'blocked' %}bg-secondary{% else %}bg-success{% endif %}">
-                {{ slot.get_status_display }}
-              </span>
-            </td>
-            <td>
-              {% if slot.status == "booked" %}
-                <div><strong>{{ slot.client.get_full_name|default:slot.client.username }}</strong></div>
-                {% if slot.client_note %}<small class="text-muted italic">Note: {{ slot.client_note }}</small>{% endif %}
-              {% elif slot.status == "blocked" %}
-                {% if slot.blocked_reason %}<small class="text-muted">{{ slot.blocked_reason }}</small>{% endif %}
-              {% else %}
-                <span class="text-muted">—</span>
-              {% endif %}
-            </td>
-            <td>
-              {% if slot.status == "available" %}
-                <form method="post" action="{% url 'block_slot' slot.id %}" class="d-flex gap-1">
-                  {% csrf_token %}
-                  <input name="blocked_reason" class="form-control form-control-sm" placeholder="Reason">
-                  <button type="submit" class="btn btn-sm btn-outline-warning">Block</button>
-                </form>
-              {% elif slot.status == "booked" %}
-                 <form method="post" action="{% url 'cancel_booking_physio' slot.id %}" onsubmit="return confirm('Are you sure you want to cancel this booking?');">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-sm btn-outline-danger">Cancel Booking</button>
-                 </form>
-              {% else %}
-                <span class="text-muted">—</span>
-              {% endif %}
-            </td>
-            <td>
-              {% if slot.status != "booked" %}
-                <a href="{% url 'delete_slot' slot.id %}" class="btn btn-sm btn-danger">
-                  <i class="fas fa-trash"></i> Delete
-                </a>
-              {% else %}
-                <button class="btn btn-sm btn-danger disabled" title="Cannot delete booked slot"><i class="fas fa-trash"></i></button>
-              {% endif %}
-            </td>
-          </tr>
-        {% empty %}
-          <tr>
-            <td colspan="6" class="text-center">No slots found for the upcoming period.</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+  <table class="table table-hover align-middle">
+    <thead class="table-light">
+      <tr>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Status</th>
+        <th>Client / Notes</th>
+        <th>Manage Status</th>
+        <th>Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for slot in slots %}
+      {# ВИПРАВЛЕНО: додано пробіли навколо == #}
+      <tr {% if slot.status == 'booked' %}class="table-info"{% endif %}>
+        <td>{{ slot.date }}</td>
+        <td>{{ slot.start_time }} – {{ slot.end_time }}</td>
+        <td>
+          <span
+            class="badge {% if slot.status == 'booked' %}bg-primary{% elif slot.status == 'blocked' %}bg-secondary{% else %}bg-success{% endif %}">
+            {{ slot.get_status_display }}
+          </span>
+        </td>
+        <td>
+          {% if slot.status == "booked" %}
+            {% if slot.client %}
+              <div><strong>{{ slot.client.get_full_name|default:slot.client.username }}</strong></div>
+            {% else %}
+              <div class="text-danger"><strong>Error: No client</strong></div>
+            {% endif %}
+
+            {% if slot.client_note %}
+              <small class="text-muted italic">Note: {{ slot.client_note }}</small>
+            {% endif %}
+
+          {% elif slot.status == "blocked" %}
+            {% if slot.blocked_reason %}
+              <small class="text-muted">{{ slot.blocked_reason }}</small>
+            {% endif %}
+          {% else %}
+            <span class="text-muted">—</span>
+          {% endif %}
+        </td>
+        <td>
+          {% if slot.status == "available" %}
+          <form method="post" action="{% url 'block_slot' slot.id %}" class="d-flex gap-1">
+            {% csrf_token %}
+            <input name="blocked_reason" class="form-control form-control-sm" placeholder="Reason">
+            <button type="submit" class="btn btn-sm btn-outline-warning">Block</button>
+          </form>
+          {% elif slot.status == "booked" %}
+          <form method="post" action="{% url 'cancel_booking_physio' slot.id %}"
+            onsubmit="return confirm('Are you sure you want to cancel this booking?');">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-sm btn-outline-danger">Cancel Booking</button>
+          </form>
+          {% else %}
+          <span class="text-muted">—</span>
+          {% endif %}
+        </td>
+        <td>
+          {% if slot.status != "booked" %}
+          <a href="{% url 'delete_slot' slot.id %}" class="btn btn-sm btn-danger">
+            <i class="fas fa-trash"></i> Delete
+          </a>
+          {% else %}
+          <button class="btn btn-sm btn-danger disabled" title="Cannot delete booked slot">
+              <i class="fas fa-trash"></i>
+          </button>
+          {% endif %}
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="6" class="text-center">No slots found for the upcoming period.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
 {% endblock %}

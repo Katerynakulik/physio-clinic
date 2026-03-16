@@ -34,20 +34,20 @@ Physiotherapist Dashboard
         <h2 class="h5 card-title mb-2">Quick info</h2>
 
         {% if request.user|has_physio_profile %}
-          <ul class="list-unstyled mb-0">
-            <li>
-              <strong>Specialization:</strong>
-              {{ request.user.physiotherapist.specialization }}
-            </li>
-            <li>
-              <strong>Working hours:</strong>
-              {{ request.user.physiotherapist.working_from }} – {{ request.user.physiotherapist.working_to }}
-            </li>
-          </ul>
+        <ul class="list-unstyled mb-0">
+          <li>
+            <strong>Specialization:</strong>
+            {{ request.user.physiotherapist.specialization }}
+          </li>
+          <li>
+            <strong>Working hours:</strong>
+            {{ request.user.physiotherapist.working_from }} – {{ request.user.physiotherapist.working_to }}
+          </li>
+        </ul>
         {% else %}
-          <p class="text-muted mb-0">
-            Profile data is not available.
-          </p>
+        <p class="text-muted mb-0">
+          Profile data is not available.
+        </p>
         {% endif %}
       </div>
     </article>
@@ -72,86 +72,75 @@ Physiotherapist Dashboard
 
         <tbody>
           {% for slot in slots %}
-            <tr>
-              <td>{{ slot.date }}</td>
-              <td>{{ slot.start_time }} – {{ slot.end_time }}</td>
+          <tr>
+            <td>{{ slot.date }}</td>
+            <td>{{ slot.start_time }} – {{ slot.end_time }}</td>
 
-              <td>
-                {% if slot.status == "booked" %}
-                  <span class="badge bg-primary">Booked</span>
-                {% elif slot.status == "blocked" %}
-                  <span class="badge bg-danger">Blocked</span>
-                {% else %}
-                  <span class="badge bg-success">Available</span>
-                {% endif %}
-              </td>
+            <td>
+              {% if slot.status == "booked" %}
+              <span class="badge bg-primary">Booked</span>
+              {% elif slot.status == "blocked" %}
+              <span class="badge bg-danger">Blocked</span>
+              {% else %}
+              <span class="badge bg-success">Available</span>
+              {% endif %}
+            </td>
 
-              <td>
-                {% if slot.status == "booked" %}
-                  <div><strong>{{ slot.client.get_username }}</strong></div>
+            <td>
+              {% if slot.status == "booked" %}
+              <div><strong>{{ slot.client.get_username }}</strong></div>
 
-                  {% if slot.client_note %}
-                    <div class="text-muted small">{{ slot.client_note }}</div>
-                  {% endif %}
+              {% if slot.client_note %}
+              <div class="text-muted small">{{ slot.client_note }}</div>
+              {% endif %}
 
-                  {% if slot.physio_note %}
-                    <div class="text-muted small mt-1">
-                      <strong>Internal:</strong> {{ slot.physio_note }}
-                    </div>
-                  {% endif %}
+              {% if slot.physio_note %}
+              <div class="text-muted small mt-1">
+                <strong>Internal:</strong> {{ slot.physio_note }}
+              </div>
+              {% endif %}
 
-                {% elif slot.status == "blocked" %}
-                  <div class="text-muted small">
-                    {{ slot.blocked_reason|default:"—" }}
-                  </div>
-                {% else %}
-                  <span class="text-muted">—</span>
-                {% endif %}
-              </td>
+              {% elif slot.status == "blocked" %}
+              <div class="text-muted small">
+                {{ slot.blocked_reason|default:"—" }}
+              </div>
+              {% else %}
+              <span class="text-muted">—</span>
+              {% endif %}
+            </td>
 
-              <td>
-                {% if slot.status == "booked" %}
-                  <div class="d-grid gap-2">
+            <td>
+              {% if slot.status == "booked" %}
+              <div class="d-grid gap-2">
 
-                    <form method="post" action="{% url 'update_physio_note' slot.id %}">
-                      {% csrf_token %}
-                      <input
-                        type="text"
-                        name="physio_note"
-                        class="form-control form-control-sm"
-                        placeholder="Internal note"
-                        value=""
-                      >
-                      <button
-                        type="submit"
-                        class="btn btn-sm btn-outline-primary w-100 mt-1"
-                      >
-                        Save note
-                      </button>
-                    </form>
+                <form method="post" action="{% url 'update_physio_note' slot.id %}">
+                  {% csrf_token %}
+                  <input type="text" name="physio_note" class="form-control form-control-sm" placeholder="Internal note"
+                    value="">
+                  <button type="submit" class="btn btn-sm btn-outline-primary w-100 mt-1">
+                    Save note
+                  </button>
+                </form>
 
-                    <form method="post" action="{% url 'cancel_booking_physio' slot.id %}">
-                      {% csrf_token %}
-                      <button
-                        type="submit"
-                        class="btn btn-sm btn-outline-danger w-100"
-                      >
-                        Cancel booking
-                      </button>
-                    </form>
+                <form method="post" action="{% url 'cancel_booking_physio' slot.id %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-sm btn-outline-danger w-100">
+                    Cancel booking
+                  </button>
+                </form>
 
-                  </div>
-                {% else %}
-                  <span class="text-muted">—</span>
-                {% endif %}
-              </td>
-            </tr>
+              </div>
+              {% else %}
+              <span class="text-muted">—</span>
+              {% endif %}
+            </td>
+          </tr>
           {% empty %}
-            <tr>
-              <td colspan="5" class="text-muted">
-                No upcoming slots found.
-              </td>
-            </tr>
+          <tr>
+            <td colspan="5" class="text-muted">
+              No upcoming slots found.
+            </td>
+          </tr>
           {% endfor %}
         </tbody>
       </table>

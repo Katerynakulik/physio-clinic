@@ -9,9 +9,11 @@
                 <h4 class="mb-0">Permanently Delete Slot?</h4>
             </div>
             <div class="card-body">
-                <p>Are you sure you want to delete the slot on <strong>{{ slot.date }}</strong> at <strong>{{ slot.start_time }}</strong>?</p>
-                <p class="text-danger small">This action cannot be undone and the slot will be removed from the database.</p>
-                
+                <p>Are you sure you want to delete the slot on <strong>{{ slot.date }}</strong> 
+                    at <strong>{{ slot.start_time }}</strong>?</p>
+                <p class="text-danger small">This action cannot be undone and the slot will be removed from the
+                    database.</p>
+
                 <form method="post">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-danger">Yes, Delete Permanently</button>
