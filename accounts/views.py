@@ -81,9 +81,7 @@ class RoleBasedLoginView(LoginView):
         depending on user type.
         """
         user = self.request.user
-        # Welcome message on login
-        messages.info(self.request, f"Welcome back, {user.first_name}!")
-
+        
         # Client users
         if hasattr(user, "clientprofile"):
             return "/accounts/client/dashboard/"

@@ -28,6 +28,8 @@ class Physiotherapist(models.Model):
     working_from = models.TimeField()
     working_to = models.TimeField()
 
+    last_generated_until = models.DateField(null=True, blank=True)
+
     is_active = models.BooleanField(default=True)
 
     def __str__(self):

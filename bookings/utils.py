@@ -1,39 +1,52 @@
-from datetime import datetime, time, timedelta
-
+from datetime import datetime, timedelta, date
 from .models import BookingSlot
-
 
 def ensure_slots_for_physio(physio, days_ahead=21):
     """
-    Ensure hourly slots exist for each weekday for the next N days.
-    Default working hours: 09:00–18:00 (end exclusive).
-    Slots are created only if missing (idempotent).
+    Automated logic to generate daily booking slots for a physiotherapist.
+    It prevents recreated deleted slots by using a 'checkpoint' field.
     """
+    today = date.today()
+    # Define the date up to which we want to have slots
+    target_date = today + timedelta(days=days_ahead)
+    
+    # Logic to handle persistent deletion:
+    # We only start generating from the day after the last successful generation.
+    # If it's a new physio, we start from today.
+    if physio.last_generated_until:
+        start_date = physio.last_generated_until + timedelta(days=1)
+    else:
+        start_date = today
+    
+    # If we have already generated slots up to or beyond the target, stop here.
+    if start_date > target_date:
+        return
 
-    today = datetime.today().date()
-
-    work_start = getattr(physio, "working_from", None) or time(9, 0)
-    work_end = getattr(physio, "working_to", None) or time(18, 0)
-
-    for day_offset in range(days_ahead + 1):
-        slot_date = today + timedelta(days=day_offset)
-
-        # Weekdays only: Monday(0) ... Friday(4)
-        if slot_date.weekday() > 4:
-            continue
-
-        current = datetime.combine(slot_date, work_start)
-        end_dt = datetime.combine(slot_date, work_end)
-
-        while current < end_dt:
-            next_dt = current + timedelta(hours=1)
-
-            BookingSlot.objects.get_or_create(
-                physiotherapist=physio,
-                date=slot_date,
-                start_time=current.time(),
-                end_time=next_dt.time(),
-                defaults={"status": BookingSlot.STATUS_AVAILABLE},
-            )
-
-            current = next_dt
+    current_date = start_date
+    while current_date <= target_date:
+        # Business logic: generate slots for weekdays only (Monday to Friday)
+        # weekday() returns 0 for Monday and 6 for Sunday.
+        if current_date.weekday() < 5: 
+            # Use the physio's specific working hours from the model
+            start_hour = physio.working_from.hour
+            end_hour = physio.working_to.hour
+            
+            # Generate hourly slots based on working hours
+            for hour in range(start_hour, end_hour):
+                start_t = datetime.strptime(f"{hour}:00", "%H:%M").time()
+                end_t = datetime.strptime(f"{hour+1}:00", "%H:%M").time()
+                
+                # get_or_create is used as a safety measure against manual duplicates
+                BookingSlot.objects.get_or_create(
+                    physiotherapist=physio,
+                    date=current_date,
+                    start_time=start_t,
+                    end_time=end_t,
+                    defaults={'status': BookingSlot.STATUS_AVAILABLE}
+                )
+        
+        current_date += timedelta(days=1)
+    
+    # Update the physio checkpoint so this period isn't processed again
+    physio.last_generated_until = target_date
+    physio.save()
