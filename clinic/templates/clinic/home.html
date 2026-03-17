@@ -22,7 +22,7 @@
         </div>
 
         <div class="card-body d-flex flex-column">
-          <h5 class="card-title fw-bold mb-1">{{ physio.user.get_full_name }}</h5>
+          <h2 class="h5 card-title fw-bold mb-1">{{ physio.user.get_full_name }}</h2>
           <p class="text-muted small mb-2">
             <strong>Specialization:</strong> {{ physio.specialization }}
           </p>
@@ -41,9 +41,9 @@
   </div>
 </section>
 
-<section class="text-center">
+<div class="text-center">
   <a class="btn btn-primary btn-lg" href="{% url 'booking_home' %}">
     Book an appointment
   </a>
-</section>
+</div>
 {% endblock %}
