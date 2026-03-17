@@ -16,9 +16,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY", "dev-only-secret-key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = os.environ.get("DEBUG", "False") == "True"
-
-DEBUG = False
+DEBUG = os.environ.get("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = [
     "127.0.0.1",
@@ -83,7 +81,6 @@ DATABASES = {
         default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}"
     )
 }
-
 
 
 # Password validation

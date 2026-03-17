@@ -1,31 +1,48 @@
-{% extends "base.html" %} {% block title %}Booking{% endblock %}
+{% extends "base.html" %} 
+{% block title %}Booking with {{ physiotherapist }}{% endblock %}
 
 {% block content %}
-<h1 class="mb-4">Book with {{ physiotherapist }}</h1>
+<div class="container py-4">
+    <h1 class="mb-4 text-center">Book with {{ physiotherapist }}</h1>
 
-<div class="row">
-  {% for slot in slots %}
-  <div class="col-md-4 mb-3">
-    <div class="card h-100 shadow-sm">
-      <div class="card-body">
-        <p class="mb-2">
-          <strong>{{ slot.date }}</strong><br>
-          {{ slot.start_time }} – {{ slot.end_time }}
-        </p>
-
-        <form method="post" action="{% url 'book_slot' slot.id %}">
-          {% csrf_token %}
-          <div class="mb-2">
-            <label class="form-label">Comment (optional)</label>
-            <textarea name="client_note" class="form-control" rows="2"></textarea>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      {% for slot in slots %}
+      <div class="col">
+        <div class="card h-100 shadow-sm border-0">
+          <div class="card-header bg-light border-0">
+            <h5 class="mb-0 text-center">{{ slot.date|date:"D, d M Y" }}</h5>
           </div>
-          <button type="submit" class="btn btn-primary w-100">Book</button>
-        </form>
+          <div class="card-body text-center">
+            <p class="lead mb-3">
+              <span class="badge bg-info text-dark">{{ slot.start_time|time:"H:i" }} – {{ slot.end_time|time:"H:i" }}</span>
+            </p>
+
+            {% if not request.user.physiotherapist %}
+                {# Standard booking form for clients #}
+                <form method="post" action="{% url 'book_slot' slot.id %}">
+                  {% csrf_token %}
+                  <div class="mb-3">
+                    <label class="form-label small text-muted">Comment (optional)</label>
+                    <textarea name="client_note" class="form-control" rows="2" placeholder="Tell us more..."></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary w-100 fw-bold">Book Slot</button>
+                </form>
+            {% else %}
+                {# View-only mode for staff members #}
+                <div class="alert alert-secondary mb-0 py-2">
+                    <small><i class="fas fa-lock me-1"></i> Staff View-Only</small>
+                </div>
+            {% endif %}
+          </div>
+        </div>
       </div>
+      {% empty %}
+      <div class="col-12 text-center">
+        <div class="alert alert-warning">
+            No available slots for this specialist at the moment.
+        </div>
+      </div>
+      {% endfor %}
     </div>
-  </div>
-  {% empty %}
-  <p>No available slots.</p>
-  {% endfor %}
 </div>
 {% endblock %}
