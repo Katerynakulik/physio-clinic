@@ -11,6 +11,7 @@ from .utils import ensure_slots_for_physio
 from django.http import HttpResponseForbidden
 from django.utils import timezone
 from django.contrib import messages
+from django.db import models
 
 
 @login_required
@@ -30,13 +31,16 @@ def booking_page(request, physio_id):
 
     # Ensure slots exist for upcoming period
     ensure_slots_for_physio(physiotherapist, days_ahead=21)
+    now = timezone.localtime()
 
     # Only available slots should be visible to clients
     slots = BookingSlot.objects.filter(
         physiotherapist=physiotherapist,
-        status=BookingSlot.STATUS_AVAILABLE,
-        date__gte=timezone.now().date(),
-    )
+        status=BookingSlot.STATUS_AVAILABLE
+    ).filter(
+        models.Q(date__gt=now.date()) |
+        models.Q(date=now.date(), start_time__gt=now.time())
+    ).order_by("date", "start_time")
 
     return render(
         request,
@@ -54,7 +58,7 @@ def book_slot(request, slot_id):
     - Validates that the slot is still available.
     - Prevents booking historical (past) time slots.
     """
-   
+
     if request.method != "POST":
         return redirect("booking_home")
 

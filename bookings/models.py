@@ -3,6 +3,7 @@ Models for the bookings app.
 Defines the BookingSlot model which acts as the core entity for the 
 appointment system, linking Physiotherapists and Clients.
 """
+
 from django.db import models
 from django.conf import settings
 from accounts.models import Physiotherapist
