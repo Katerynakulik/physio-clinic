@@ -1,3 +1,7 @@
+"""
+URL routing for the bookings application.
+Maps patient-facing booking views and staff-facing management views.
+"""
 from django.urls import path
 from . import views
 from . import views_physio

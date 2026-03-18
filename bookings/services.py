@@ -1,10 +1,13 @@
+"""
+Business logic layer for calculating time slot availability.
+Separates data processing from views to maintain a clean architecture.
+"""
 from datetime import time, timedelta, datetime
 from .models import Booking, BlockedSlot
 
-# Slot availability service
-
 
 def generate_daily_slots():
+    """Returns a list of hourly time objects within standard clinic hours (9-18)."""
     start = time(9, 0)
     end = time(18, 0)
 
@@ -19,6 +22,10 @@ def generate_daily_slots():
 
 
 def get_available_slots(physiotherapist, date):
+    """
+    Calculates a list of free time slots by excluding already booked 
+    or manually blocked appointments for a specific date.
+    """
     all_slots = generate_daily_slots()
 
     booked = Booking.objects.filter(

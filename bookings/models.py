@@ -1,3 +1,8 @@
+"""
+Models for the bookings app.
+Defines the BookingSlot model which acts as the core entity for the 
+appointment system, linking Physiotherapists and Clients.
+"""
 from django.db import models
 from django.conf import settings
 from accounts.models import Physiotherapist
@@ -5,11 +10,15 @@ from accounts.models import Physiotherapist
 
 class BookingSlot(models.Model):
     """
-    Represents a single time slot for a physiotherapist.
-    A slot can be:
-    - available: visible to clients
-    - booked: booked by a client, visible to both
-    - blocked: blocked by the physiotherapist, hidden from clients
+    Represents an individual time slot for a physiotherapy session.
+
+    Attributes:
+        STATUS_CHOICES (list): Defines three states: Available, Booked, and Blocked.
+        physiotherapist (ForeignKey): Link to the professional providing the service.
+        client (ForeignKey): Link to the User who booked the slot (optional).
+        physio_note (CharField): Private notes for the physiotherapist.
+        client_note (TextField): Notes provided by the patient during booking.
+        blocked_reason (CharField): Reason for manually blocking a slot (e.g., Vacation).
     """
 
     STATUS_AVAILABLE = "available"
@@ -38,7 +47,6 @@ class BookingSlot(models.Model):
         default=STATUS_AVAILABLE
     )
 
-    # Client is set only when status == booked
     client = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
@@ -47,14 +55,11 @@ class BookingSlot(models.Model):
         related_name="bookings"
     )
     physio_note = models.CharField(max_length=255, blank=True)
-
-    # Optional note entered by the client during booking (visible to physio & client)
     client_note = models.TextField(blank=True)
-
-    # Optional reason entered by the physio when blocking the slot (visible to physio only)
     blocked_reason = models.CharField(max_length=200, blank=True)
 
     class Meta:
+        """Enforces unique time slots per physiotherapist and default sorting."""
         ordering = ["date", "start_time"]
         unique_together = ("physiotherapist", "date", "start_time")
 

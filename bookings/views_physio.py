@@ -1,3 +1,7 @@
+"""
+Controller logic for physiotherapist-specific interactions.
+Focuses on schedule management, manual slot control, and appointment oversight.
+"""
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
@@ -10,10 +14,7 @@ from .forms import BookingSlotForm
 
 
 def is_physio(user):
-    """
-    Helper function to check if the user has a physiotherapist profile.
-    Used by user_passes_test decorator.
-    """
+    """Access control helper: checks if the user has a professional profile."""
     return hasattr(user, 'physiotherapist')
 
 
@@ -21,15 +22,13 @@ def is_physio(user):
 @user_passes_test(is_physio)
 def physio_schedule(request):
     """
-    Display the physiotherapist's schedule.
-    Automatically triggers slot generation via ensure_slots_for_physio.
+    Main dashboard for staff to view their schedule.
+    Optimized with select_related('client') to reduce database queries.
     """
     physio = request.user.physiotherapist
     # Automated logic: ensures default slots exist for the next 21 days
     ensure_slots_for_physio(physio, days_ahead=21)
 
-    # Отримуємо слоти, включаючи пов'язаних клієнтів (select_related),
-    # щоб уникнути помилок Failed lookup при рендерингу.
     slots = BookingSlot.objects.filter(
         physiotherapist=physio,
         date__gte=timezone.now().date(),
@@ -56,11 +55,11 @@ def create_slot(request):
                 messages.success(request, "New slot created successfully!")
                 return redirect("physio_schedule")
             except IntegrityError:
-                # Додатковий захист від дублікатів на рівні бази даних
-                messages.error(request, "A slot for this date and time already exists.")
+
+                messages.error(
+                    request, "A slot for this date and time already exists.")
         else:
-            # Якщо форма невалідна (наприклад, час у минулому), повідомлення про помилки 
-            # будуть виведені автоматично через {{ form.non_field_errors }} у шаблоні.
+
             messages.error(request, "Please correct the errors below.")
     else:
         form = BookingSlotForm(physiotherapist=physio)
@@ -101,16 +100,16 @@ def block_slot(request, slot_id):
 @user_passes_test(is_physio)
 def delete_slot(request, slot_id):
     """
-    Permanently delete a slot from the database (CRUD: Delete).
-    Includes security checks to satisfy LO3 requirements.
+    Permanently removes a slot. 
+    Defensive Design: Prevents deletion of booked slots to protect patient data.
     """
     physio = request.user.physiotherapist
-    # Використовуємо filter за physio для захисту від видалення чужих слотів (Defensive Design)
+
     slot = get_object_or_404(BookingSlot, id=slot_id, physiotherapist=physio)
 
-    # Не дозволяємо видаляти слоти, які вже заброньовані клієнтами
     if slot.status == BookingSlot.STATUS_BOOKED:
-        messages.error(request, "Cannot delete a slot that is already booked. Please cancel the booking first.")
+        messages.error(
+            request, "Cannot delete a slot that is already booked. Please cancel the booking first.")
         return redirect("physio_schedule")
 
     if request.method == "POST":
@@ -143,10 +142,10 @@ def cancel_booking_physio(request, slot_id):
         status=BookingSlot.STATUS_BOOKED,
     )
 
-    # Валідація: заборона скасування записів, що вже відбулися
     now = timezone.localtime()
     if slot.date < now.date() or (slot.date == now.date() and slot.start_time <= now.time()):
-        messages.warning(request, "Cannot cancel appointments that have already passed.")
+        messages.warning(
+            request, "Cannot cancel appointments that have already passed.")
         return redirect("physio_schedule")
 
     slot.status = BookingSlot.STATUS_AVAILABLE
@@ -154,5 +153,6 @@ def cancel_booking_physio(request, slot_id):
     slot.client_note = ""
     slot.save()
 
-    messages.success(request, "Booking cancelled successfully. The slot is now available.")
+    messages.success(
+        request, "Booking cancelled successfully. The slot is now available.")
     return redirect("physio_schedule")

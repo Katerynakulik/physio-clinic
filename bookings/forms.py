@@ -7,6 +7,10 @@ from django.core.exceptions import ValidationError
 
 class BookingSlotForm(forms.ModelForm):
     class Meta:
+        """
+    Form for manual creation/editing of booking slots by physiotherapists.
+    Includes custom widgets for Bootstrap styling and date/time pickers.
+    """
         model = BookingSlot
         fields = ['date', 'start_time', 'end_time',
                   'status', 'client', 'client_note']
@@ -20,11 +24,19 @@ class BookingSlotForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
+        """
+        Initializes the form with a specific physiotherapist instance 
+        to facilitate overlap validation.
+        """
 
         self.physiotherapist = kwargs.pop('physiotherapist', None)
         super().__init__(*args, **kwargs)
 
     def clean(self):
+        """
+        Custom validation to ensure no duplicate slots are created 
+        for the same physiotherapist at the same time.
+        """
         cleaned_data = super().clean()
         date = cleaned_data.get('date')
         start_time = cleaned_data.get('start_time')

@@ -1,3 +1,7 @@
+"""
+Controller logic for public and client-facing booking interactions.
+Handles specialist selection, slot browsing, and the final booking process.
+"""
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 
@@ -21,10 +25,7 @@ def booking_home(request):
 
 @login_required
 def booking_page(request, physio_id):
-    """
-    Display available booking slots for a selected physiotherapist.
-    Auto-generates missing slots for upcoming weekdays.
-    """
+    """Displays only future 'available' slots for a specific specialist."""
     physiotherapist = get_object_or_404(Physiotherapist, id=physio_id)
 
     # Ensure slots exist for upcoming period
@@ -47,10 +48,13 @@ def booking_page(request, physio_id):
 @login_required
 def book_slot(request, slot_id):
     """
-    Book a specific available slot for the logged-in client.
-    Booking is allowed only for future time slots.
+    Main booking logic.
+    Defensive Design: 
+    - Restricts booking to clients only.
+    - Validates that the slot is still available.
+    - Prevents booking historical (past) time slots.
     """
-    # Only POST requests are allowed
+   
     if request.method != "POST":
         return redirect("booking_home")
 
