@@ -42,16 +42,32 @@ class BookingSlotForm(forms.ModelForm):
         start_time = cleaned_data.get('start_time')
         physio = self.physiotherapist
 
-        if date and start_time and physio:
-            exists = BookingSlot.objects.filter(
-                physiotherapist=physio,
-                date=date,
-                start_time=start_time
-            ).exists()
+        if date and start_time:
+            # Отримуємо поточний локальний час
+            now = timezone.localtime()
+            
+            # Створюємо об'єкт datetime для слота, який намагаємось створити
+            slot_datetime = timezone.make_aware(
+                datetime.combine(date, start_time)
+            )
 
-            if exists:
+            # 1. Перевірка: чи не в минулому цей час?
+            if slot_datetime < now:
                 raise forms.ValidationError(
-                    "A slot for this date and time already exists in your schedule."
+                    "You cannot create a slot in the past. Please select a future time."
                 )
+
+            # 2. Перевірка: чи не існує вже такий слот (твій існуючий код)
+            if physio:
+                exists = BookingSlot.objects.filter(
+                    physiotherapist=physio,
+                    date=date,
+                    start_time=start_time
+                ).exists()
+
+                if exists:
+                    raise forms.ValidationError(
+                        "A slot for this date and time already exists in your schedule."
+                    )
 
         return cleaned_data

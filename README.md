@@ -17,15 +17,92 @@ Physio Clinic is a medical appointment scheduling platform with the following go
 
 This project implements CRUD functionality for bookings and slots, Agile methodology tracking, and appropriate user stories.
 
----
-
-## Deployed Application
-
 The application is deployed to Heroku and can be accessed at:
 
 **https://physio-clinic-d609e92202b3.herokuapp.com/**
 
 ---
+
+### User Goals
+
+#### As a Patient (Client):
+
+- To easily browse a list of qualified physiotherapists and view their specializations.
+- To check real-time availability and book an appointment without needing to call the clinic.
+- To manage personal bookings, including viewing upcoming sessions and having the ability to cancel if plans change.
+- To provide additional context to the specialist by leaving notes during the booking process.
+
+#### As a Physiotherapist (Staff):
+
+- To have an automated, organized schedule that generates slots for the weeks ahead.
+- To manually manage availability by blocking specific times for breaks or personal leave.
+- To see client details and notes for each appointment in a clear dashboard.
+- To maintain professional boundaries by having the authority to cancel or modify slots as needed.
+
+### Site Owner Goals
+- Service Automation: Reduce administrative overhead by allowing clients to book slots directly through the platform.
+- Efficiency: Ensure that physiotherapists' working hours are fully utilized through automated slot generation and easy-to-manage schedules.
+- Data Integrity: Maintain an accurate database of specialists, clients, and appointments with built-in protections against scheduling overlaps.
+- Professionalism: Provide a secure, user-friendly interface that builds trust between the clinic and its patients.
+
+
+---
+
+### Target Audience
+* **Patients (Clients):** Individuals seeking physical therapy who prefer a quick, digital way to book appointments without phone calls.
+* **Physiotherapists (Medical Staff):** Professionals who need an organized, automated way to manage their daily schedule and patient flow.
+* **Clinic Administrators:** System owners who manage staff credentials and ensure the integrity of the medical practitioner list.
+
+### User Requirements and Expectations
+* **Security & Access Control:** * Patients expect their booking data to be private.
+    * Staff accounts must be created exclusively by a Superuser to prevent unauthorized individuals from posing as medical professionals.
+* **Simplicity:** A clean, intuitive interface that allows booking a slot in just a few clicks.
+* **Automation:** The system should handle repetitive tasks, such as generating daily slots for the upcoming weeks.
+* **Reliability:** * Users expect real-time updates (a slot should disappear once booked).
+    * Prevention of double-booking or booking in the past.
+* **Visual Clarity:** Clear distinction between "Available", "Booked", and "Blocked" time slots using a color-coded system.
+
+## Agile Methodology
+
+The development of **Physio Clinic** followed Agile principles, utilizing a GitHub Projects board for task tracking, prioritization, and sprint planning.
+
+### User Stories
+
+To ensure a user-centric approach, the project was broken down into granular User Stories. Each story includes specific **Acceptance Criteria** to define the boundaries of the feature.
+
+| ID | User Role | Requirement | Goal/Benefit |
+|:---|:----------|:------------|:-------------|
+| #1 | Visitor | Register as a client | To book appointments online |
+| #2 | User | Login & Role-based redirect | To access personal dashboard |
+| #5 | Client | Book an available slot | To schedule a session |
+| #8 | Physio | View personal schedule | To manage daily workload |
+| #10| Physio | Update booking notes | To keep track of patient treatment |
+| #11| Physio | Block time slots | To manage breaks or vacations |
+
+### Project Management (Kanban)
+The project was managed using a MoSCoW prioritization technique (Must-have, Should-have, Could-have):
+* **Must-have:** Authentication, Booking logic, Dashboards.
+* **Should-have:** Admin management, Slot blocking, Notes.
+* **Could-have:** Email confirmations (under development).
+
+![Project Board Screenshot](docs/project_board.png)
+*Figure: GitHub Project Board showcasing the development workflow and task statuses.*
+
+### 🛠 Development Workflow
+For this project, I employed a **Trunk-Based Development** strategy:
+* **Rapid Iteration:** Due to the solo nature of the project and the need for rapid prototyping, all features were integrated directly into the main branch after local successful testing.
+* **Feature Atomicity:** Each commit message was mapped to a specific User Story ID (e.g., `feat: implement slot blocking #3`) to maintain traceability despite the lack of Pull Requests.
+* **Continuous Integration:** Regular pushes ensured that the environment (Heroku/Render) stayed synchronized with the latest stable code.
+
+### 🎯 Project Milestones
+
+| Milestone | Status | Key Features |
+|:----------|:-------|:-------------|
+| **Phase 1: Foundation** | Done | Authentication, Role-based access, Admin CRUD |
+| **Phase 2: MVP Booking** | Done | Physio browsing, Real-time booking logic, Basic Dashboards |
+| **Phase 3: Management** | Done | Slot blocking, Internal notes, Cancellations, Media handling |
+| **Phase 4: Future** | Backlog | Email notifications, Treatment history, Automated Payroll |
+
 
 ## User Login Details
 
