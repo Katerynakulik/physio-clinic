@@ -418,12 +418,12 @@ The [W3C Markup Validation Service](https://validator.w3.org/) was used to valid
 
 | Page | Status | Screenshot (Click to view) |
 |:---|:---:|:---:|
-| **Home Page** | Pass | [<img src="docs/validation/html_home.png" width="150">](docs/validation/html_home.png) |
-| **Choose Physiotherapist** | Pass | [<img src="docs/validation/html_choose.png" width="150">](docs/validation/html_choose.png) |
-| **Booking Selection** | Pass | [<img src="docs/validation/html_booking.png" width="150">](docs/validation/html_booking.png) |
-| **Client Dashboard** | Pass | [<img src="docs/validation/html_client_dash.png" width="150">](docs/validation/html_client_dash.png) |
-| **Physio Dashboard** | Pass | [<img src="docs/validation/html_staff_dash.png" width="150">](docs/validation/html_staff_dash.png) |
-| **Login / Register** | Pass | [<img src="docs/validation/html_auth.png" width="150">](docs/validation/html_auth.png) |
+| **Home Page** | Pass | [<img src="docs/validation/html_home.png" width="600">](docs/validation/html_home.png) |
+| **Choose Physiotherapist** | Pass | [<img src="docs/validation/html_choose.png" width="600">](docs/validation/html_choose.png) |
+| **Booking Selection** | Pass | [<img src="docs/validation/html_booking.png" width="600">](docs/validation/html_booking.png) |
+| **Client Dashboard** | Pass | [<img src="docs/validation/html_client_dash.png" width="600">](docs/validation/html_client_dash.png) |
+| **Physio Dashboard** | Pass | [<img src="docs/validation/html_staff_dash.png" width="600">](docs/validation/html_staff_dash.png) |
+| **Login / Register** | Pass | [<img src="docs/validation/html_auth.png" width="600">](docs/validation/html_auth.png) |
 
 ---
 
@@ -432,92 +432,92 @@ The [W3C Jigsaw CSS Validation Service](https://jigsaw.w3.org/css-validator/) wa
 
 | File | Status | Screenshot (Click to view) |
 |:---|:---:|:---:|
-| **style.css** | No Errors | [<img src="docs/validation/css_validation.png" width="150">](docs/validation/css_validation.png) |
+| **style.css** | No Errors | [<img src="docs/validation/css_validation.png" width="600">](docs/validation/css_validation.png) |
 
 ---
 
 ### **Python (PEP8) Validation**
-Python files were validated using **Pycodestyle** (formerly PEP8) within the Gitpod environment. All logic files follow the standard Python formatting rules.
 
-| App / File | Status | Notes |
+All custom Python logic across the project apps (`accounts`, `bookings`, `clinic`) has been validated against the [PEP8 Style Guide](https://peps.python.org/pep-0008/). 
+
+To ensure high-quality, readable code, the following workflow was applied:
+1. **Automated Formatting:** [autopep8](https://pypi.org/project/autopep8/) was used to resolve initial indentation and spacing issues.
+2. **Manual Refactoring:** Complex logic and long strings (e.g., in `settings.py` and `views.py`) were manually refactored to fit the 79-character limit.
+3. **Strict Verification:** Final validation was performed using the `pycodestyle` tool, excluding virtual environment and automatically generated migration files.
+
+| App / File | Status | Validation Method |
 |:---|:---:|:---|
-| **Accounts (models/views)** | Pass | Fully compliant with PEP8 |
-| **Bookings (models/views)** | Pass | Fully compliant with PEP8 |
-| **Clinic (models/views)** | Pass | Fully compliant with PEP8 |
-| **Project Settings** | Pass | Fully compliant with PEP8 |
+| **Accounts App** | Pass | pycodestyle & autopep8 |
+| **Bookings App** | Pass | pycodestyle & autopep8 |
+| **Clinic App** | Pass | pycodestyle & autopep8 |
+| **Project Configuration** | Pass | Manual refactoring & pycodestyle |
+
+#### **PEP8 Terminal Verification**
+The screenshot below confirms a "clean" run of the validation command, showing no PEP8 violations in the custom codebase.
+
+[<img src="docs/validation/python_pep8_pass.png" width="700">](docs/validation/python_pep8_pass.png)
+---
+
+### **Lighthouse & Accessibility**
+Performance and accessibility were tested across both Desktop and Mobile views using Google Lighthouse.
+
+| Page | Lighthouse (Desktop) | Lighthouse (Mobile) |
+|:---|:---:|:---:|
+| **Home Page** | [<img src="docs/validation/lh_home_dsktp.png" width="200">](docs/validation/lh_home_dsktp.png) | [<img src="docs/validation/lh_home_mob.png" width="200">](docs/validation/lh_home_mob.png) |
+| **Choose Physiotherapist** | [<img src="docs/validation/lh_list_dsktp.png" width="200">](docs/validation/lh_list_dsktp.png) | [<img src="docs/validation/lh_list_mob.png" width="200">](docs/validation/lh_list_mob.png) |
+| **Booking Selection** | [<img src="docs/validation/lh_book_dsktp.png" width="200">](docs/validation/lh_book_dsktp.png) | [<img src="docs/validation/lh_book_mob.png" width="200">](docs/validation/lh_book_mob.png) |
+| **Client Dashboard** | [<img src="docs/validation/lh_client_dsktp.png" width="200">](docs/validation/lh_client_dsktp.png)  | [<img src="docs/validation/lh_client_mob.png" width="200">](docs/validation/lh_client_mob.png) |
+| **Physio Dashboard** | [<img src="docs/validation/lh_phis_db_dsktp.png" width="200">](docs/validation/lh_phis_db_dsktp.png)  | [<img src="docs/validation/lh_phis_db_mob.png" width="200">](docs/validation/lh_phis_db_mob.png) |
+| **Schedule** | [<img src="docs/validation/lh_schedule_dsktp.png" width="200">](docs/validation/lh_schedule_dsktp.png)  | [<img src="docs/validation/lh_schedule_mob.png" width="200">](docs/validation/lh_schedule_mob.png) |
+| **Register** | [<img src="docs/validation/lh_registr_dsktp.png" width="200">](docs/validation/lh_registr_dsktp.png) | [<img src="docs/validation/lh_registr_mob.png" width="200">](docs/validation/lh_registr_mob.png) |
+| **Login** | [<img src="docs/validation/lh_login_dsktp.png" width="200">](docs/validation/lh_login_dsktp.png) | [<img src="docs/validation/lh_login_mob.png" width="200">](docs/validation/lh_login_mob.png) |
+
+## **Manual Testing**
+
+To ensure the application is robust and secure, extensive manual testing was performed across all user roles. The testing focused on logical constraints, defensive design, and user feedback (Django Messages).
+
+### **1. Authentication & Access Control**
+The system uses custom decorators and logic to ensure users only access what they are authorized to see.
+
+| Feature | Action | Expected Result | Actual Result | Status |
+|:---|:---|:---|:---|:---:|
+| **Role-Based Login** | Log in as a **Physiotherapist** | Automatically redirected to `physio_dashboard` | As expected | **Pass** |
+| **Role-Based Login** | Log in as a **Client** | Automatically redirected to `client_dashboard` | As expected | **Pass** |
+| **Unauthorized Access**| Try to access Physiotherapist views as a **Client** | System returns `403 Forbidden` (Access denied) | As expected | **Pass** |
+| **Unauthorized Access**| Try to access Client Dashboard as a **Physio** | System returns `403 Forbidden` (Access denied) | As expected | **Pass** |
+| **Unauthenticated** | Try to access any dashboard without logging in | Redirected to Login page immediately | As expected | **Pass** |
+
+### **2. Patient (Client) Booking Flow**
+Testing the "Happy Path" and edge cases for appointment management.
+
+| Feature | Action | Expected Result | Actual Result | Status |
+|:---|:---|:---|:---|:---:|
+| **Slot Selection** | Click "Book" on an available slot | Redirected to specialist's booking page | As expected | **Pass** |
+| **Booking Success** | Submit booking with an optional note | Slot status changes to "Booked", redirected to Dashboard | As expected | **Pass** |
+| **Cancellation** | Cancel an upcoming appointment | Slot becomes "Available" for others, removed from dashboard | As expected | **Pass** |
+| **Defensive Design** | Try to book a slot that has just passed | View filters out past slots automatically from the grid | As expected | **Pass** |
+| **Past Data Protection**| Try to cancel a past appointment (yesterday) | No "Cancel" option available for historical data | As expected | **Pass** |
+
+### **3. Staff (Physiotherapist) Management**
+Testing schedule control and data integrity for medical staff.
+
+| Feature | Action | Expected Result | Actual Result | Status |
+|:---|:---|:---|:---|:---:|
+| **Manual Creation** | Create a slot for a future date/time | Slot is saved and visible in the schedule | As expected | **Pass** |
+| **Overlap Shield** | Try to create a slot at an existing time | Error: "A slot for this date and time already exists" | As expected | **Pass** |
+| **Past Date Shield** | Try to create a slot for a past date | Form Validation Error: "You cannot create a slot in the past" | As expected | **Pass** |
+| **Time Blocking** | Block an available slot with a reason | Status changes to "Blocked", reason is recorded | As expected | **Pass** |
+| **Delete Safety** | Try to delete a slot that is already "Booked" | Error: "Please cancel the booking first" to protect data | As expected | **Pass** |
+| **Internal Notes** | Update "Physio Note" on a patient's booking | Success message "Note updated", private data saved | As expected | **Pass** |
+| **Staff Cancel** | Cancel a booking on behalf of a patient | Slot reset to "Available", Success message displayed | As expected | **Pass** |
 
 ---
 
-### **Lighthouse & Accessibility (WAVE)**
-Performance and accessibility were tested across both Desktop and Mobile views using Google Lighthouse and the WAVE Evaluation Tool.
-
-| Page | Lighthouse (Desktop) | WAVE Status | Screenshot (Click to view) |
-|:---|:---:|:---:|:---:|
-| **Home Page** | 95+ | 0 Errors | [<img src="docs/validation/light_home.png" width="100">](docs/validation/light_home.png) |
-| **Booking Grid** | 90+ | 0 Errors | [<img src="docs/validation/light_booking.png" width="100">](docs/validation/light_booking.png) |
-| **Staff Dashboard** | 90+ | 0 Errors | [<img src="docs/screenshots/light_staff.png" width="100">](docs/screenshots/light_staff.png) |
-
-
-## Testing
-
-This section documents the manual testing process carried out to validate the functionality, usability, and performance of the Physio Clinic application.  
-All tests were planned in advance and executed step by step during development and after deployment.
-
----
-
-### Functionality Testing
-
-| Test Label               | Test Action                            | Expected Outcome                                                      | Test Outcome |
-| ------------------------ | -------------------------------------- | --------------------------------------------------------------------- | ------------ |
-| Homepage Load            | Open the deployed application          | Homepage loads with list of physiotherapists and navigation menu      | PASS         |
-| User Registration        | Register a new client account          | User account is created and user is redirected to login               | PASS         |
-| User Login               | Log in with valid client credentials   | User is logged in and redirected to client dashboard                  | PASS         |
-| Invalid Login            | Log in with invalid credentials        | Error message is displayed, login denied                              | PASS         |
-| Physiotherapist Cards    | View physiotherapist cards on homepage | Each card displays name, specialization, description, and image       | PASS         |
-| Booking Page Access      | Click “View available slots”           | User is redirected to physiotherapist booking page                    | PASS         |
-| Slot Availability        | View available time slots              | Only future, available slots are displayed                            | PASS         |
-| Slot Booking             | Book an available slot with a comment  | Slot status changes to “Booked” and disappears from availability list | PASS         |
-| Empty Comment Validation | Attempt to book without a comment      | Booking is prevented and warning message is shown                     | PASS         |
-| Past Time Restriction    | Attempt to book a past time slot       | Booking is blocked                                                    | PASS         |
-| Client Dashboard         | View client dashboard                  | User sees upcoming booked appointments                                | PASS         |
-| Physiotherapist Login    | Log in as physiotherapist              | User is redirected to physiotherapist dashboard                       | PASS         |
-| Physiotherapist Schedule | Open physiotherapist schedule          | All slots with correct statuses are displayed                         | PASS         |
-| Cancel Booking (Physio)  | Cancel a booked slot                   | Slot becomes available again, client note is cleared                  | PASS         |
-| Block Slot               | Block a time slot                      | Slot status changes to “Blocked” and is unavailable for booking       | PASS         |
-| Logout                   | Log out from application               | User is logged out and redirected to homepage                         | PASS         |
-| Authorization            | Access restricted pages without login  | User is redirected to login page                                      | PASS         |
-
----
-
-### ⚡ Lighthouse Testing
-
-Lighthouse audits were performed using **Google Chrome DevTools** on the deployed application.
-
-| Page Tested    | Screenshot File                                          | Notes                  |
-| -------------- | -------------------------------------------------------- | ---------------------- |
-| Homepage       | <img src="docs/screenshots/l_home.png" height="200"/>    | All scores above 90%   |
-| Booking Page   | <img src="docs/screenshots/l_booking.png" height="200"/> | Dynamic content tested |
-| Dashboard Page | <img src="docs/screenshots/l_dash.png" height="200"/>    | Authenticated view     |
-
-All Lighthouse scores achieved **90% or higher** in:
-
-- Performance
-- Accessibility
-- Best Practices
-- SEO
-
----
-
-### Browser Compatibility Testing
-
-The application was tested on the following browsers:
-
-| Browser         | Result |
-| --------------- | ------ |
-| Google Chrome   | PASS   |
-| Mozilla Firefox | PASS   |
-| Microsoft Edge  | PASS   |
-| Mobile Chrome   | PASS   |
+### **Bug Fixes during Development**
+* **Timezone Issue:** Initially, past slots were appearing in the booking grid. Fixed by implementing `timezone.localtime()` to ensure accurate "now" comparison for the clinic's location.
+* **Integrity Errors:** Multiple slots could be created for the same time. Fixed by adding `unique_together` constraint in the Model and a clean method in the Form to provide user-friendly error messages.
+* **Create slot:** When the app was first created, slots were generated automatically. Now you can create a slot if the selected time slot is available.
+* **Delete slot:** Initially, the slot could only be blocked. Now it can be deleted, even if it is blocked.
 
 ---
 
