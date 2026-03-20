@@ -10,7 +10,7 @@
       <div class="col">
         <div class="card h-100 shadow-sm border-0">
           <div class="card-header bg-light border-0">
-            <h5 class="mb-0 text-center">{{ slot.date|date:"D, d M Y" }}</h5>
+            <h2 class="h5 mb-0 text-center">{{ slot.date|date:"D, d M Y" }}</h2>
           </div>
           <div class="card-body text-center">
             <p class="lead mb-3">
@@ -22,8 +22,8 @@
                 <form method="post" action="{% url 'book_slot' slot.id %}">
                   {% csrf_token %}
                   <div class="mb-3">
-                    <label class="form-label small text-muted">Comment (optional)</label>
-                    <textarea name="client_note" class="form-control" rows="2" placeholder="Tell us more..."></textarea>
+                    <label for="note-{{ slot.id }}" class="form-label small text-muted">Comment (optional)</label>
+                    <textarea id="note-{{ slot.id }}" name="client_note" class="form-control" rows="2" placeholder="Tell us more..."></textarea>
                   </div>
                   <button type="submit" class="btn btn-primary w-100 fw-bold">Book Slot</button>
                 </form>

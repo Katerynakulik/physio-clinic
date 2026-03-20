@@ -458,19 +458,49 @@ The screenshot below confirms a "clean" run of the validation command, showing n
 [<img src="docs/validation/python_pep8_pass.png" width="700">](docs/validation/python_pep8_pass.png)
 ---
 
-### **Lighthouse & Accessibility**
-Performance and accessibility were tested across both Desktop and Mobile views using Google Lighthouse.
+### **Lighthouse Audit**
+Lighthouse was used to test the performance, accessibility, best practices, and SEO of the application for both Desktop and Mobile users.
 
-| Page | Lighthouse (Desktop) | Lighthouse (Mobile) | Lighthouse (Mobile) | Lighthouse (Mobile) |
-|:---|:---:|:---:|:---:|:---:|
-| **Home Page** | [<img src="docs/validation/lh_home_dsktp.png" width="200">](docs/validation/lh_home_dsktp.png) | [<img src="docs/validation/lh_home_mob.png" width="200">](docs/validation/lh_home_mob.png) | [<img src="docs/validation/wave_home.png" width="200">](docs/validation/wave_home.png) | [Wave link](https://wave.webaim.org/report#/https://physio-clinic-d609e92202b3.herokuapp.com/) |
+| Page | Lighthouse (Desktop) | Lighthouse (Mobile) |
+|:---|:---:|:---:|
+| **Home Page** | [<img src="docs/validation/lh_home_dsktp.png" width="200">](docs/validation/lh_home_dsktp.png) | [<img src="docs/validation/lh_home_mob.png" width="200">](docs/validation/lh_home_mob.png) |
 | **Choose Physiotherapist** | [<img src="docs/validation/lh_list_dsktp.png" width="200">](docs/validation/lh_list_dsktp.png) | [<img src="docs/validation/lh_list_mob.png" width="200">](docs/validation/lh_list_mob.png) |
 | **Booking Selection** | [<img src="docs/validation/lh_book_dsktp.png" width="200">](docs/validation/lh_book_dsktp.png) | [<img src="docs/validation/lh_book_mob.png" width="200">](docs/validation/lh_book_mob.png) |
-| **Client Dashboard** | [<img src="docs/validation/lh_client_dsktp.png" width="200">](docs/validation/lh_client_dsktp.png)  | [<img src="docs/validation/lh_client_mob.png" width="200">](docs/validation/lh_client_mob.png) |
-| **Physio Dashboard** | [<img src="docs/validation/lh_phis_db_dsktp.png" width="200">](docs/validation/lh_phis_db_dsktp.png)  | [<img src="docs/validation/lh_phis_db_mob.png" width="200">](docs/validation/lh_phis_db_mob.png) |
-| **Schedule** | [<img src="docs/validation/lh_schedule_dsktp.png" width="200">](docs/validation/lh_schedule_dsktp.png)  | [<img src="docs/validation/lh_schedule_mob.png" width="200">](docs/validation/lh_schedule_mob.png) |
+| **Client Dashboard** | [<img src="docs/validation/lh_client_dsktp.png" width="200">](docs/validation/lh_client_dsktp.png) | [<img src="docs/validation/lh_client_mob.png" width="200">](docs/validation/lh_client_mob.png) |
+| **Physio Dashboard** | [<img src="docs/validation/lh_phis_db_dsktp.png" width="200">](docs/validation/lh_phis_db_dsktp.png) | [<img src="docs/validation/lh_phis_db_mob.png" width="200">](docs/validation/lh_phis_db_mob.png) |
+| **Schedule** | [<img src="docs/validation/lh_schedule_dsktp.png" width="200">](docs/validation/lh_schedule_dsktp.png) | [<img src="docs/validation/lh_schedule_mob.png" width="200">](docs/validation/lh_schedule_mob.png) |
+| **Create Slot** | [<img src="docs/validation/lh_slot_dsktp.png" width="200">](docs/validation/lh_slot_dsktp.png) | [<img src="docs/validation/lh_slot_mob.png" width="200">](docs/validation/lh_slot_mob.png) |
 | **Register** | [<img src="docs/validation/lh_registr_dsktp.png" width="200">](docs/validation/lh_registr_dsktp.png) | [<img src="docs/validation/lh_registr_mob.png" width="200">](docs/validation/lh_registr_mob.png) |
 | **Login** | [<img src="docs/validation/lh_login_dsktp.png" width="200">](docs/validation/lh_login_dsktp.png) | [<img src="docs/validation/lh_login_mob.png" width="200">](docs/validation/lh_login_mob.png) |
+
+---
+
+### **WAVE Accessibility Audit**
+The WAVE (Web Accessibility Evaluation Tool) was used to ensure the application is accessible. Secure pages were audited using the WAVE Browser Extension.
+
+| Page | WAVE Result Image |
+|:---|:---:|
+| **Home Page** | [<img src="docs/validation/wave_home_1.png" width="250">](docs/validation/wave_home_1.png) [<img src="docs/validation/wave_home_2.png" width="250">](docs/validation/wave_home_2.png) | 
+| **Choose Physiotherapist** | [<img src="docs/validation/wave_list_1.png" width="250">](docs/validation/wave_list_1.png) [<img src="docs/validation/wave_list_2.png" width="250">](docs/validation/wave_list_2.png)  | 
+| **Booking Selection** | [<img src="docs/validation/wave_book_1.png" width="250">](docs/validation/wave_book_1.png)[<img src="docs/validation/wave_book_2.png" width="250">](docs/validation/wave_book_2.png)[<img src="docs/validation/wave_book_3.png" width="250">](docs/validation/wave_book_3.png) |
+| **Client Dashboard** | [<img src="docs/validation/wave_client_1.png" width="250">](docs/validation/wave_client_1.png) [<img src="docs/validation/wave_client_2.png" width="250">](docs/validation/wave_client_2.png)|
+| **Physio Dashboard** | [<img src="docs/validation/wave_phis_db_1.png" width="250">](docs/validation/wave_phis_db_1.png) [<img src="docs/validation/wave_phis_db_2.png" width="250">](docs/validation/wave_phis_db_2.png) [<img src="docs/validation/wave_phis_db_3.png" width="250">](docs/validation/wave_phis_db_3.png)|
+| **Schedule** | [<img src="docs/validation/wave_schedule_1.png" width="250">](docs/validation/wave_schedule_1.png) [<img src="docs/validation/wave_schedule_2.png" width="250">](docs/validation/wave_schedule_2.png) [<img src="docs/validation/wave_schedule_3.png" width="250">](docs/validation/wave_schedule_3.png) [<img src="docs/validation/wave_schedule_4.png" width="250">](docs/validation/wave_schedule_4.png) [<img src="docs/validation/wave_schedule_5.png" width="250">](docs/validation/wave_schedule_5.png) |
+| **Create slot** | [<img src="docs/validation/wave_slot_1.png" width="250">](docs/validation/wave_slot_1.png) [<img src="docs/validation/wave_slot_2.png" width="250">](docs/validation/wave_slot_2.png)|
+| **Register** | [<img src="docs/validation/wave_register_1.png" width="250">](docs/validation/wave_register_1.png) [<img src="docs/validation/wave_register_2.png" width="250">](docs/validation/wave_register_2.png)|
+| **Login** | [<img src="docs/validation/wave_login_1.png" width="250">](docs/validation/wave_login_1.png) [<img src="docs/validation/wave_login_2.png" width="250">](docs/validation/wave_login_2.png)|
+
+---
+
+### **Detailed Accessibility Summary**
+
+| Category | Status | Observations |
+|:---|:---:|:---|
+| **Errors** | **0** | No red accessibility errors were identified across audited pages. |
+| **Contrast Errors** | **0** | Text-to-background contrast ratios are compliant with WCAG standards. |
+| **Features** | **High** | Proper use of alternative text for images and linked form labels. |
+| **Structural Elements** | **Verified** | Correct hierarchy of headings (H1-H3) and use of semantic HTML5 landmarks. |
+| **ARIA** | **Optimized** | ARIA roles and labels are used to enhance navigation for screen readers. |
 
 ## **Manual Testing**
 
