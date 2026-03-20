@@ -1,6 +1,6 @@
 """
 Models for the bookings app.
-Defines the BookingSlot model which acts as the core entity for the 
+Defines the BookingSlot model which acts as the core entity for the
 appointment system, linking Physiotherapists and Clients.
 """
 
@@ -14,12 +14,18 @@ class BookingSlot(models.Model):
     Represents an individual time slot for a physiotherapy session.
 
     Attributes:
-        STATUS_CHOICES (list): Defines three states: Available, Booked, and Blocked.
-        physiotherapist (ForeignKey): Link to the professional providing the service.
-        client (ForeignKey): Link to the User who booked the slot (optional).
-        physio_note (CharField): Private notes for the physiotherapist.
-        client_note (TextField): Notes provided by the patient during booking.
-        blocked_reason (CharField): Reason for manually blocking a slot (e.g., Vacation).
+        STATUS_CHOICES (list): Defines three states:
+        Available, Booked, and Blocked.
+        physiotherapist (ForeignKey):
+            Link to the professional providing the service.
+        client (ForeignKey):
+            Link to the User who booked the slot (optional).
+        physio_note (CharField):
+            Private notes for the physiotherapist.
+        client_note (TextField):
+            Notes provided by the patient during booking.
+        blocked_reason (CharField):
+            Reason for manually blocking a slot (e.g., Vacation).
     """
 
     STATUS_AVAILABLE = "available"
@@ -60,9 +66,14 @@ class BookingSlot(models.Model):
     blocked_reason = models.CharField(max_length=200, blank=True)
 
     class Meta:
-        """Enforces unique time slots per physiotherapist and default sorting."""
+        """
+        Enforces unique time slots per physiotherapist and default sorting.
+        """
         ordering = ["date", "start_time"]
         unique_together = ("physiotherapist", "date", "start_time")
 
     def __str__(self):
-        return f"{self.physiotherapist} | {self.date} {self.start_time} ({self.status})"
+        return (
+            f"{self.physiotherapist} | {self.date} "
+            f"{self.start_time} ({self.status})"
+        )

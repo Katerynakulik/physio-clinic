@@ -1,7 +1,7 @@
 """
 Models for the accounts app.
-Defines user profiles for Clients and Physiotherapists using OneToOne relationships
-with the Django built-in User model.
+Defines user profiles for Clients and Physiotherapists using
+OneToOne relationships with the Django built-in User model.
 """
 from django.db import models
 from django.contrib.auth.models import User
@@ -31,9 +31,11 @@ class Physiotherapist(models.Model):
 
     Attributes:
         specialization (CharField): Professional focus area.
-        photo_static_path (CharField): Reliable path for static images on Heroku.
+        photo_static_path (CharField): Reliable path for static images on
+        Heroku.
         working_from/to (TimeField): Daily shift boundaries.
-        last_generated_until (DateField): Tracks the timeline of pre-generated slots.
+        last_generated_until (DateField): Tracks the timeline of
+        pre-generated slots.
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     specialization = models.CharField(max_length=100)

@@ -1,5 +1,6 @@
 """
-Views for handling user authentication, registration, and role-based dashboards.
+Views for handling user authentication, registration,
+and role-based dashboards.
 """
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
@@ -16,7 +17,8 @@ from bookings.models import BookingSlot
 def register_client(request):
     """
     Handles new client registration.
-    Creates a User and an associated ClientProfile upon successful form submission.
+    Creates a User and an associated ClientProfile upon successful
+    form submission.
     """
     if request.method == "POST":
         form = ClientRegistrationForm(request.POST)
@@ -35,7 +37,8 @@ def register_client(request):
 @login_required
 def client_dashboard(request):
     """
-    Displays the personal dashboard for clients, showing their upcoming appointments.
+    Displays the personal dashboard for clients, showing their
+    upcoming appointments.
     Restricts access to users without a ClientProfile.
     """
     if not hasattr(request.user, "clientprofile"):
@@ -47,7 +50,11 @@ def client_dashboard(request):
         date__gte=timezone.now().date(),
     ).order_by("date", "start_time")
 
-    return render(request, "accounts/client_dashboard.html", {"upcoming": upcoming})
+    return render(
+        request,
+        "accounts/client_dashboard.html",
+        {"upcoming": upcoming}
+    )
 
 
 @login_required
@@ -71,7 +78,8 @@ def physio_dashboard(request):
 class RoleBasedLoginView(LoginView):
     """
     Extends Django's LoginView to provide dynamic redirection.
-    Sends users to different dashboards depending on their profile type (Physio vs Client).
+    Sends users to different dashboards depending on their profile type
+    (Physio vs Client).
     """
     template_name = "accounts/login.html"
 

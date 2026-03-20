@@ -11,14 +11,17 @@ def ensure_slots_for_physio(physio, days_ahead=21):
     Automatically generates daily 1-hour booking slots for a physiotherapist.
 
     Logic:
-    1. Checks the 'last_generated_until' checkpoint to avoid re-generating deleted slots.
+    1. Checks the 'last_generated_until' checkpoint to avoid
+    re-generating deleted slots.
     2. Iterates through weekdays (Mon-Fri) within the target range.
-    3. Uses the physiotherapist's specific working hours to create hourly BookingSlot objects.
+    3. Uses the physiotherapist's specific working hours
+    to create hourly BookingSlot objects.
     4. Employs get_or_create to prevent IntegrityErrors from manual duplicates.
 
     Args:
         physio (Physiotherapist): The profile instance to generate slots for.
-        days_ahead (int): How many days into the future slots should be created.
+        days_ahead (int):
+        How many days into the future slots should be created.
     """
     today = date.today()
     target_date = today + timedelta(days=days_ahead)

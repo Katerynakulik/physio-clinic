@@ -19,9 +19,17 @@ def booking_home(request):
     """
     Show a list of physiotherapists to start a booking.
     """
-    physiotherapists = Physiotherapist.objects.filter(is_active=True) if hasattr(
-        Physiotherapist, "is_active") else Physiotherapist.objects.all()
-    return render(request, "bookings/booking_home.html", {"physiotherapists": physiotherapists})
+    physiotherapists = Physiotherapist.objects.filter(is_active=True)
+    if hasattr(Physiotherapist, "is_active"):
+        physiotherapists = Physiotherapist.objects.filter(is_active=True)
+    else:
+        physiotherapists = Physiotherapist.objects.all()
+
+    return render(
+        request,
+        "bookings/booking_home.html",
+        {"physiotherapists": physiotherapists}
+    )
 
 
 @login_required
@@ -53,7 +61,7 @@ def booking_page(request, physio_id):
 def book_slot(request, slot_id):
     """
     Main booking logic.
-    Defensive Design: 
+    Defensive Design:
     - Restricts booking to clients only.
     - Validates that the slot is still available.
     - Prevents booking historical (past) time slots.
@@ -112,7 +120,8 @@ def cancel_booking(request, slot_id):
 
     now = timezone.localtime()
 
-    if slot.date < now.date() or (slot.date == now.date() and slot.start_time <= now.time()):
+    if slot.date < now.date() or \
+            (slot.date == now.date() and slot.start_time <= now.time()):
         return redirect("client_dashboard")
 
     slot.status = 'available'

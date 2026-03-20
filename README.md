@@ -366,55 +366,97 @@ The management table is designed with overflow handling, ensuring that staff can
 
 </details>
 
+## **Testing Accounts**
+To facilitate comprehensive testing of role-specific functionalities, the following pre-configured accounts are available. 
 
+> [!TIP]
+> **Client Accounts:** While you can use the credentials below, we encourage creating a new account via the [Registration Page](#) to test the full user journey.
 
+### **Physiotherapist Accounts (Staff Access)**
+These accounts provide access to the **Physiotherapist Dashboard**, schedule management, and internal note-taking features.
 
+| Specialization | Username | Password |
+| :--- | :--- | :--- |
+| **Superuser** | `Kateryna` | `23142314` |
+| **Orthopedic** | `lilia_kraft` | `VaDhLQ@Xx3DP3d@` |
+| **Neurological** | `anna_levski` | `2EhLA@vFJ77CqsL` |
+| **Geriatric** | `melissa_kel` | `6Gpy6pULUaSi@Ry` |
 
+### **Test Client Account (User Access)**
+| Role | Username | Password |
+| :--- | :--- | :--- |
+| **Active Patient** | `test_client` | `Password123!` |
 
+---
 
+## **Features Overview**
 
+### **1. Secure Authentication**
+* **Multi-Role System:** Automated redirection logic that sends Physiotherapists to the Staff Dashboard and Clients to the Personal Booking Dashboard.
+* **Identity Protection:** Secure registration for new clients with real-time validation.
+* **Session Management:** Secure Login/Logout functionality with CSRF protection to prevent unauthorized access.
 
-## User Login Details
+### **2. Patient (Client) Features**
+* **Specialist Directory:** Browse a complete list of clinic physiotherapists with detailed professional profiles.
+* **Real-time Booking:** View dynamic availability grids and book slots instantly.
+* **Personalized Care:** Ability to leave symptoms or specific requests in a "Patient Note" during booking.
+* **Appointment Management:** A dedicated "My Dashboard" to track upcoming visits or cancel appointments if plans change.
 
-The following users are available for mentor testing. Use these credentials to explore role-specific functionality:
-
-**Physiotherapist Accounts**
-
-| Specialization                | Username      | Password          |
-| ----------------------------- | ------------- | ----------------- |
-| Orthopedic Physical Therapy   | `lilia_kraft` | `VaDhLQ@Xx3DP3d@` |
-| Neurological Physical Therapy | `anna_levski` | `2EhLA@vFJ77CqsL` |
-| Geriatric Physical Therapy    | `melissa_kel` | `6Gpy6pULUaSi@Ry` |
-
-> Note: Client accounts can be created via the registration page.
+### **3. Medical Staff (Physiotherapist) Features**
+* **Professional Dashboard:** Centralized view of the daily and weekly schedule.
+* **Advanced Scheduling:** * **Time Blocking:** Ability to block slots for lunch, vacations, or holidays with a mandatory reason.
+    * **Manual Slot Creation:** Add custom availability periods beyond standard hours.
+* **Clinical Records:** Add "Internal Notes" to booked slots for private medical tracking (invisible to patients).
+* **Administrative Control:** Full authority to cancel bookings or unblock previously restricted time periods.
 
 ---
 
-## Features
+## **Validation**
 
-### User Authentication
+### **HTML Validation**
+The [W3C Markup Validation Service](https://validator.w3.org/) was used to validate the HTML structure of each page. All templates were checked by URI (for live Heroku pages) and by Direct Input (for authenticated views).
 
-- Register new client accounts
-- Login with role-based redirects (client or physiotherapist)
-- Logout with CSRF protection
-
-### Client Functionality
-
-- Browse available physiotherapists
-- View available slots per therapist
-- Book an appointment with a required note
-- View upcoming appointments in dashboard
-- Cancel bookings
-
-### Physiotherapist Functionality
-
-- View upcoming slots and bookings
-- Block time periods with reason (vacation, lunch, etc.)
-- Cancel client bookings
-- Add internal notes per booked slot
-- Unblock slots
+| Page | Status | Screenshot (Click to view) |
+|:---|:---:|:---:|
+| **Home Page** | Pass | [<img src="docs/validation/html_home.png" width="150">](docs/validation/html_home.png) |
+| **Choose Physiotherapist** | Pass | [<img src="docs/validation/html_choose.png" width="150">](docs/validation/html_choose.png) |
+| **Booking Selection** | Pass | [<img src="docs/validation/html_booking.png" width="150">](docs/validation/html_booking.png) |
+| **Client Dashboard** | Pass | [<img src="docs/validation/html_client_dash.png" width="150">](docs/validation/html_client_dash.png) |
+| **Physio Dashboard** | Pass | [<img src="docs/validation/html_staff_dash.png" width="150">](docs/validation/html_staff_dash.png) |
+| **Login / Register** | Pass | [<img src="docs/validation/html_auth.png" width="150">](docs/validation/html_auth.png) |
 
 ---
+
+### **CSS Validation**
+The [W3C Jigsaw CSS Validation Service](https://jigsaw.w3.org/css-validator/) was used to test the custom `style.css` file.
+
+| File | Status | Screenshot (Click to view) |
+|:---|:---:|:---:|
+| **style.css** | No Errors | [<img src="docs/validation/css_validation.png" width="150">](docs/validation/css_validation.png) |
+
+---
+
+### **Python (PEP8) Validation**
+Python files were validated using **Pycodestyle** (formerly PEP8) within the Gitpod environment. All logic files follow the standard Python formatting rules.
+
+| App / File | Status | Notes |
+|:---|:---:|:---|
+| **Accounts (models/views)** | Pass | Fully compliant with PEP8 |
+| **Bookings (models/views)** | Pass | Fully compliant with PEP8 |
+| **Clinic (models/views)** | Pass | Fully compliant with PEP8 |
+| **Project Settings** | Pass | Fully compliant with PEP8 |
+
+---
+
+### **Lighthouse & Accessibility (WAVE)**
+Performance and accessibility were tested across both Desktop and Mobile views using Google Lighthouse and the WAVE Evaluation Tool.
+
+| Page | Lighthouse (Desktop) | WAVE Status | Screenshot (Click to view) |
+|:---|:---:|:---:|:---:|
+| **Home Page** | 95+ | 0 Errors | [<img src="docs/validation/light_home.png" width="100">](docs/validation/light_home.png) |
+| **Booking Grid** | 90+ | 0 Errors | [<img src="docs/validation/light_booking.png" width="100">](docs/validation/light_booking.png) |
+| **Staff Dashboard** | 90+ | 0 Errors | [<img src="docs/screenshots/light_staff.png" width="100">](docs/screenshots/light_staff.png) |
+
 
 ## Testing
 

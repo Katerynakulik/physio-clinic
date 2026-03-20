@@ -100,8 +100,9 @@ def block_slot(request, slot_id):
 @user_passes_test(is_physio)
 def delete_slot(request, slot_id):
     """
-    Permanently removes a slot. 
-    Defensive Design: Prevents deletion of booked slots to protect patient data.
+    Permanently removes a slot.
+    Defensive Design: Prevents deletion of booked slots
+    to protect patient data.
     """
     physio = request.user.physiotherapist
 
@@ -109,7 +110,10 @@ def delete_slot(request, slot_id):
 
     if slot.status == BookingSlot.STATUS_BOOKED:
         messages.error(
-            request, "Cannot delete a slot that is already booked. Please cancel the booking first.")
+            request,
+            "Cannot delete a slot that is already booked. "
+            "Please cancel the booking first."
+        )
         return redirect("physio_schedule")
 
     if request.method == "POST":
@@ -143,7 +147,8 @@ def cancel_booking_physio(request, slot_id):
     )
 
     now = timezone.localtime()
-    if slot.date < now.date() or (slot.date == now.date() and slot.start_time <= now.time()):
+    if (slot.date < now.date() or
+            (slot.date == now.date() and slot.start_time <= now.time())):
         messages.warning(
             request, "Cannot cancel appointments that have already passed.")
         return redirect("physio_schedule")

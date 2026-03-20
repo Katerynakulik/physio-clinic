@@ -15,17 +15,29 @@ class BookingSlotForm(forms.ModelForm):
         fields = ['date', 'start_time', 'end_time',
                   'status', 'client', 'client_note']
         widgets = {
-            'date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
-            'start_time': forms.TimeInput(attrs={'type': 'time', 'class': 'form-control'}),
-            'end_time': forms.TimeInput(attrs={'type': 'time', 'class': 'form-control'}),
-            'status': forms.Select(attrs={'class': 'form-select'}),
-            'client': forms.Select(attrs={'class': 'form-select'}),
-            'client_note': forms.Textarea(attrs={'class': 'form-control', 'rows': 2}),
+            'date': forms.DateInput(
+                attrs={'type': 'date', 'class': 'form-control'}
+            ),
+            'start_time': forms.TimeInput(
+                attrs={'type': 'time', 'class': 'form-control'}
+            ),
+            'end_time': forms.TimeInput(
+                attrs={'type': 'time', 'class': 'form-control'}
+            ),
+            'status': forms.Select(
+                attrs={'class': 'form-select'}
+            ),
+            'client': forms.Select(
+                attrs={'class': 'form-select'}
+            ),
+            'client_note': forms.Textarea(
+                attrs={'class': 'form-control', 'rows': 2}
+            ),
         }
 
     def __init__(self, *args, **kwargs):
         """
-        Initializes the form with a specific physiotherapist instance 
+        Initializes the form with a specific physiotherapist instance
         to facilitate overlap validation.
         """
 
@@ -34,7 +46,7 @@ class BookingSlotForm(forms.ModelForm):
 
     def clean(self):
         """
-        Custom validation to ensure no duplicate slots are created 
+        Custom validation to ensure no duplicate slots are created
         for the same physiotherapist at the same time.
         """
         cleaned_data = super().clean()
@@ -45,7 +57,7 @@ class BookingSlotForm(forms.ModelForm):
         if date and start_time:
             # Отримуємо поточний локальний час
             now = timezone.localtime()
-            
+
             # Створюємо об'єкт datetime для слота, який намагаємось створити
             slot_datetime = timezone.make_aware(
                 datetime.combine(date, start_time)
@@ -54,7 +66,8 @@ class BookingSlotForm(forms.ModelForm):
             # 1. Перевірка: чи не в минулому цей час?
             if slot_datetime < now:
                 raise forms.ValidationError(
-                    "You cannot create a slot in the past. Please select a future time."
+                    "You cannot create a slot in the past. ",
+                    "Please select a future time."
                 )
 
             # 2. Перевірка: чи не існує вже такий слот (твій існуючий код)
@@ -67,7 +80,8 @@ class BookingSlotForm(forms.ModelForm):
 
                 if exists:
                     raise forms.ValidationError(
-                        "A slot for this date and time already exists in your schedule."
+                        "A slot for this date and time ",
+                        "already exists in your schedule."
                     )
 
         return cleaned_data

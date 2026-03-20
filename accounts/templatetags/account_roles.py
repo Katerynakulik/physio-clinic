@@ -17,7 +17,7 @@ def has_client_profile(user):
         user (User): The user object to check, typically from request.user.
 
     Returns:
-        bool: True if user is authenticated and has a clientprofile attribute, 
+        bool: True if user is authenticated and has a clientprofile attribute,
               False otherwise.
     """
     if not user or not getattr(user, "is_authenticated", False):
@@ -34,7 +34,7 @@ def has_physio_profile(user):
         user (User): The user object to check, typically from request.user.
 
     Returns:
-        bool: True if user is authenticated and has a physiotherapist attribute, 
+        bool: True if user is authenticated and has a physiotherapist attribute
               False otherwise.
     """
     if not user or not getattr(user, "is_authenticated", False):

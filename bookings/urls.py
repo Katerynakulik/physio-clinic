@@ -15,7 +15,11 @@ urlpatterns = [
 
 
     # Physiotherapist schedule (role-protected)
-    path("physio/schedule/", views_physio.physio_schedule, name="physio_schedule"),
+    path(
+        "physio/schedule/",
+        views_physio.physio_schedule,
+        name="physio_schedule"
+    ),
     path("physio/slot/add/", views_physio.create_slot, name="create_slot"),
     path("physio/slot/<int:slot_id>/delete/",
          views_physio.delete_slot, name="delete_slot"),

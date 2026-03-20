@@ -1,6 +1,7 @@
 """
 Forms for user registration and profile management.
-Uses Django ModelForms to handle User creation with custom validation and UI styling.
+Uses Django ModelForms to handle User creation with
+custom validation and UI styling.
 """
 from django import forms
 from django.contrib.auth.models import User
@@ -24,13 +25,13 @@ class ClientRegistrationForm(forms.ModelForm):
         fields = ['first_name', 'last_name', 'username', 'email', 'password']
 
     def __init__(self, *args, **kwargs):
-        """Injects 'form-control' class into all fields for Bootstrap compatibility."""
+        """Injects 'form-control' class for Bootstrap compatibility."""
         super().__init__(*args, **kwargs)
         for field in self.fields:
             self.fields[field].widget.attrs.update({'class': 'form-control'})
 
     def save(self, commit=True):
-        """Hash the password and set user names before saving to the database."""
+        """Hash the password and set user names before saving."""
         user = super().save(commit=False)
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
