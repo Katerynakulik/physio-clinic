@@ -461,9 +461,9 @@ The screenshot below confirms a "clean" run of the validation command, showing n
 ### **Lighthouse & Accessibility**
 Performance and accessibility were tested across both Desktop and Mobile views using Google Lighthouse.
 
-| Page | Lighthouse (Desktop) | Lighthouse (Mobile) |
-|:---|:---:|:---:|
-| **Home Page** | [<img src="docs/validation/lh_home_dsktp.png" width="200">](docs/validation/lh_home_dsktp.png) | [<img src="docs/validation/lh_home_mob.png" width="200">](docs/validation/lh_home_mob.png) |
+| Page | Lighthouse (Desktop) | Lighthouse (Mobile) | Lighthouse (Mobile) | Lighthouse (Mobile) |
+|:---|:---:|:---:|:---:|:---:|
+| **Home Page** | [<img src="docs/validation/lh_home_dsktp.png" width="200">](docs/validation/lh_home_dsktp.png) | [<img src="docs/validation/lh_home_mob.png" width="200">](docs/validation/lh_home_mob.png) | [<img src="docs/validation/wave_home.png" width="200">](docs/validation/wave_home.png) | [Wave link](https://wave.webaim.org/report#/https://physio-clinic-d609e92202b3.herokuapp.com/) |
 | **Choose Physiotherapist** | [<img src="docs/validation/lh_list_dsktp.png" width="200">](docs/validation/lh_list_dsktp.png) | [<img src="docs/validation/lh_list_mob.png" width="200">](docs/validation/lh_list_mob.png) |
 | **Booking Selection** | [<img src="docs/validation/lh_book_dsktp.png" width="200">](docs/validation/lh_book_dsktp.png) | [<img src="docs/validation/lh_book_mob.png" width="200">](docs/validation/lh_book_mob.png) |
 | **Client Dashboard** | [<img src="docs/validation/lh_client_dsktp.png" width="200">](docs/validation/lh_client_dsktp.png)  | [<img src="docs/validation/lh_client_mob.png" width="200">](docs/validation/lh_client_mob.png) |
