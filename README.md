@@ -2,8 +2,57 @@
 
 Physio Clinic is a full-stack web application designed to allow clients to browse physiotherapists, book appointments, and manage their bookings. Physiotherapists can view and manage their schedules, block time periods, and add internal notes.
 
+[<img src="docs/screenshots/hero.png" width="800">](docs/screenshots/hero.png) <br>
+Made with [balsamiq](https://balsamiq.cloud/)
+
 This README outlines the project, features, deployment details, user instructions, technologies used, and how to contribute or test locally.
 
+---
+## **Table of Contents**
+1. [Project Overview](#project-overview)
+    * [User Goals](#user-goals)
+    * [Target Audience](#target-audience)
+    * [User Requirements and Expectations](#user-requirements-and-expectations)
+2. [Agile Methodology](#agile-methodology)
+    * [User Stories](#user-stories)
+    * [Kanban Board](#project-management-kanban)
+    * [Project Milestones](#project-milestones)
+3. [Design](#design)
+    * [Colours](#colours)
+    * [Typography](#typography)
+4. [Structure](#structure)
+    * [Website Pages](#website-pages)
+    * [Database](#database)
+5. [Technologies Used](#technologies-used)
+6. [Features](#features)
+    * [Header & Footer](#header--footer)
+    * [Home Page](#home-page)
+    * [Authentication (Registration & Login)](#authentication-registration--login)
+    * [Choose a Physiotherapist Page](#choose-a-physiotherapist-page)
+    * [Booking Selection Page](#booking-selection-page)
+    * [Client Dashboard ("My Dashboard")](#client-dashboard-my-dashboard)
+    * [Physiotherapist Dashboard](#physiotherapist-dashboard)
+    * [Physiotherapist Schedule Management](#physiotherapist-schedule-management)
+7. [Testing Accounts](#testing-accounts)
+8. [Features Overview](#features-overview)
+9. [Validation](#validation)
+    * [HTML Validation](#html-validation)
+    * [CSS Validation](#css-validation)
+    * [JavaScript Validation (JSHint))](#javascript-validation-jshint)
+    * [Python (PEP8) Validation](#python-pep8-validation)
+    * [Lighthouse Audit](#lighthouse-audit)
+    * [WAVE Accessibility Audit](#wave-accessibility-audit)
+    * [Detailed Accessibility Summary](#detailed-accessibility-summary)
+    * [Manual Testing](#manual-testing)
+    * [Automated Testing](#automated-testing)
+9. [Bugs](#bugs)
+    * [Fixed Bugs](#fixed-bugs)
+    * [Known Issues](#known-bugs)
+10. [Deployment](#deployment)
+    * [Heroku Deployment](#1-heroku-deployment)
+    * [Local Deployment](#2-local-deployment)
+11. [Credits](#credits)
+12. [Conclusion](#conclusion)
 ---
 
 ## Project Overview
@@ -39,7 +88,7 @@ The application is deployed to Heroku and can be accessed at:
 - To see client details and notes for each appointment in a clear dashboard.
 - To maintain professional boundaries by having the authority to cancel or modify slots as needed.
 
-### Site Owner Goals
+#### Site Owner Goals
 - Service Automation: Reduce administrative overhead by allowing clients to book slots directly through the platform.
 - Efficiency: Ensure that physiotherapists' working hours are fully utilized through automated slot generation and easy-to-manage schedules.
 - Data Integrity: Maintain an accurate database of specialists, clients, and appointments with built-in protections against scheduling overlaps.
@@ -54,14 +103,16 @@ The application is deployed to Heroku and can be accessed at:
 * **Clinic Administrators:** System owners who manage staff credentials and ensure the integrity of the medical practitioner list.
 
 ### User Requirements and Expectations
-* **Security & Access Control:** * Patients expect their booking data to be private.
+* **Security & Access Control:** 
+    * Patients expect their booking data to be private.
     * Staff accounts must be created exclusively by a Superuser to prevent unauthorized individuals from posing as medical professionals.
 * **Simplicity:** A clean, intuitive interface that allows booking a slot in just a few clicks.
 * **Automation:** The system should handle repetitive tasks, such as generating daily slots for the upcoming weeks.
-* **Reliability:** * Users expect real-time updates (a slot should disappear once booked).
+* **Reliability:** 
+    * Users expect real-time updates (a slot should disappear once booked).
     * Prevention of double-booking or booking in the past.
 * **Visual Clarity:** Clear distinction between "Available", "Booked", and "Blocked" time slots using a color-coded system.
-
+---
 ## Agile Methodology
 
 The development of **Physio Clinic** followed Agile principles, utilizing a GitHub Projects board for task tracking, prioritization, and sprint planning.
@@ -86,6 +137,8 @@ The project was managed using a MoSCoW prioritization technique (Must-have, Shou
 * **Could-have:** Email confirmations (under development).
 
 ![Project Board Screenshot](docs/screenshots/project_board.png)
+![Project Board Screenshot](docs/screenshots/project_board_1.png)
+
 *Figure: GitHub Project Board showcasing the development workflow and task statuses.*
 
 ### 🛠 Development Workflow
@@ -94,7 +147,7 @@ For this project, I employed a **Trunk-Based Development** strategy:
 * **Feature Atomicity:** Each commit message was mapped to a specific User Story ID (e.g., `feat: implement slot blocking #3`) to maintain traceability despite the lack of Pull Requests.
 * **Continuous Integration:** Regular pushes ensured that the environment (Heroku/Render) stayed synchronized with the latest stable code.
 
-### 🎯 Project Milestones
+### Project Milestones
 
 | Milestone | Status | Key Features |
 |:----------|:-------|:-------------|
@@ -103,22 +156,30 @@ For this project, I employed a **Trunk-Based Development** strategy:
 | **Phase 3: Management** | Done | Slot blocking, Internal notes, Cancellations, Media handling |
 | **Phase 4: Future** | Backlog | Email notifications, Treatment history, Automated Payroll |
 
-## Design
+## **Design**
 
-### Colours
-The colour palette was chosen to reflect a professional, trustworthy, and calm medical environment. I focused on a "Clean Clinical" theme with high-contrast elements for accessibility.
+### **Colours**
+The colour palette follows a "Professional Healthcare" theme, utilizing standard Bootstrap 5 semantic colours to provide intuitive feedback on appointment statuses.
 
-* **Primary Blue (`#007bff`):** Used for primary action buttons (e.g., "Book an appointment") to guide the user toward key actions.
-* **Slate Dark (`#343a40`):** Used for the navigation bar to provide a solid, professional frame for the content.
-* **Success Green (`#198754`):** Used for "Available" status badges and positive actions like "Save Slot".
-* **Danger Red (`#dc3545`):** Used for "Cancel" and "Delete" actions to warn the user of destructive operations.
+| Colour | Hex | Usage |
+|:---:|:---:|:---|
+| **Dark Navy** | `#212529` | Navbar background and primary text headings. |
+| **Primary Blue** | `#0d6efd` | "Booked" status badges and "Add Manual Slot" buttons. |
+| **Success Green** | `#198754` | "Available" status badges and successful action indicators. |
+| **Warning Yellow**| `#ffc107` | "Block" action buttons for staff (high visibility for management). |
+| **Danger Red** | `#dc3545` | "Cancel" and "Delete" buttons to signify destructive actions. |
+| **Info Blue** | `#cff4fc` | Highlighted background for "Booked" rows in the schedule table. |
+| **Light Grey** | `#f8f9fa` | Page background to maintain a clean, clinical aesthetic. |
 
-### Fonts
-The site utilizes a **Sans-Serif** typography stack (standard web fonts like Roboto/Arial). This ensures maximum readability across all devices, which is a critical requirement for healthcare platforms to remain accessible to all patient demographics, including those with visual impairments.
+### **Typography**
+* **Primary Font:** **'Roboto'** (Sans-Serif) – Used for headings and primary interface elements for its clean, modern look.
+* **Secondary Font:** **'Lato'** (Sans-Serif) – Used for body text and patient notes to ensure high readability.
+* **Fallback:** Standard **Sans-Serif** stack (Arial, Helvetica) is used to ensure performance if web fonts fail to load.
+* *Note: Fonts are imported via Google Fonts to maintain consistency across different operating systems.*
 
-### Structure
+## Structure
 
-#### Website Pages
+### Website Pages
 The site is designed with a responsive layout, featuring a navigation bar for easy access and a hamburger menu for smaller screens.
 
 | Page | Description | Desktop | Tablet | Mobile |
@@ -133,8 +194,9 @@ The site is designed with a responsive layout, featuring a navigation bar for ea
 | **My Schedule** | Professional tool for staff to block slots, add notes, or cancel sessions. | [<img src="docs/screenshots/schedule_dsktp.png" width="180">](docs/screenshots/schedule_dsktp.png) | [<img src="docs/screenshots/schedule_tab.png" width="100">](docs/screenshots/schedule_tab.png) | [<img src="docs/screenshots/schedule_mob.png" width="60">](docs/screenshots/schedule_mob.png) |
 | **Create Slot** | Professional tool for staff to block slots, add notes, or cancel sessions. | [<img src="docs/screenshots/slot_dsktp.png" width="180">](docs/screenshots/slot_dsktp.png) | [<img src="docs/screenshots/slot_tab.png" width="100">](docs/screenshots/slot_tab.png) | [<img src="docs/screenshots/slot_mob.png" width="60">](docs/screenshots/slot_mob.png) |
 | **404 Page** | A 404 page appears when a page cannot be found.  | [<img src="docs/screenshots/404_dsktp.png" width="180">](docs/screenshots/404_dsktp.png) | [<img src="docs/screenshots/404_tab.png" width="100">](docs/screenshots/404_tab.png) | [<img src="docs/screenshots/404_mob.png" width="60">](docs/screenshots/404_mob.png) |
+---
 
-#### Database
+### Database
 
 - Built with **Python** and the **Django** framework.
 - Uses **PostgreSQL** for the deployed production version and **SQLite3** for development.
@@ -206,6 +268,8 @@ This relational diagram illustrates the complex connections between our three co
 
 ### Header & Footer
 
+---
+
 The navigation and site structure are designed to be intuitive, providing a seamless experience across all devices while adapting to the user's role.
 
 #### Dynamic Navigation Bar
@@ -227,7 +291,13 @@ The Footer provides a consistent anchor at the bottom of every page, ensuring br
 - **Copyright & Attribution**: Displays the clinic name and developer credits, reinforcing a professional project standard.<br>
 <img src="docs/screenshots/footer_mob.png">
 
+---
+
 ### **Home Page**
+
+---
+
+
 The Home Page is designed to provide users with a quick overview of the clinic's services and immediate access to the booking system.
 
 | Element Name | Description | Image Reference (Click to enlarge) |
@@ -247,7 +317,12 @@ The landing page layout is fully responsive, ensuring a seamless experience acro
 | [<img src="docs/screenshots/home_dsktp.png" width="180">](docs/screenshots/home_dsktp.png) | [<img src="docs/screenshots/home_tab.png" width="100">](docs/screenshots/home_tab.png) | [<img src="docs/screenshots/home_mob.png" width="60">](docs/screenshots/home_mob.png) |
 </details>
 
+---
+
 ### **Authentication (Registration & Login)**
+
+---
+
 The application uses Django’s built-in authentication system to ensure that patient data remains private and that only authorized users can manage appointments.
 
 | Element Name | Description | Image Reference (Click to enlarge) |
@@ -259,7 +334,12 @@ The application uses Django’s built-in authentication system to ensure that pa
 > **User Access Control (Defensive Design):**
 > If an unauthenticated (guest) user attempts to book a slot, the system automatically redirects them to the **Login Page**. Access to the booking confirmation and personal dashboards is strictly restricted to logged-in users only.
 
+---
+
 ### **Choose a Physiotherapist Page**
+
+---
+
 This intermediate page acts as a comprehensive directory. It allows patients to browse the full list of medical staff, ensuring scalability as the clinic grows and more specialists join the team.
 
 | Element Name | Description | 
@@ -279,7 +359,12 @@ This list maintains a consistent and readable layout across all screen sizes, fr
 | [<img src="docs/screenshots/physio_dsktp.png" width="180">](docs/screenshots/physio_dsktp.png) | [<img src="docs/screenshots/physio_tab.png" width="180">](docs/screenshots/physio_tab.png) | [<img src="docs/screenshots/physio_mob.png" width="60">](docs/screenshots/physio_mob.png) |
 </details>
 
+---
+
 ### **Booking Selection Page**
+
+---
+
 This page allows patients to view and reserve specific time slots with their chosen physiotherapist. The interface is designed to be clean and intuitive, ensuring a smooth booking process.
 
 | Element Name | Description | Image Reference (Click to enlarge) |
@@ -299,7 +384,12 @@ The card-based layout is highly flexible, automatically adjusting the number of 
 
 </details>
 
+---
+
 ### **Client Dashboard ("My Dashboard")**
+
+---
+
 The Client Dashboard serves as a personal management hub for patients, allowing them to track their upcoming sessions and manage their treatment schedule in real-time.
 
 | Element Name | Description | Image Reference (Click to enlarge) |
@@ -320,7 +410,12 @@ The dashboard table is optimized for readability, ensuring that patients can eas
 
 </details>
 
+---
+
 ### **Physiotherapist Dashboard**
+
+---
+
 The Physiotherapist Dashboard is a specialized management portal designed for medical staff. It provides a comprehensive overview of their professional profile and direct control over their daily schedule and patient interactions.
 
 | Element Name | Description | Image Reference (Click to enlarge) |
@@ -343,7 +438,12 @@ The dashboard is fully responsive, allowing specialists to check their schedule 
 
 </details>
 
+---
+
 ### **Physiotherapist Schedule Management**
+
+---
+
 This advanced administrative interface allows staff to have full granular control over their availability, patient bookings, and time blocking.
 
 | Element Name | Description | Image Reference (Click to enlarge) |
@@ -367,13 +467,20 @@ The management table is designed with overflow handling, ensuring that staff can
 
 </details>
 
+---
+
 ## **Testing Accounts**
 To facilitate comprehensive testing of role-specific functionalities, the following pre-configured accounts are available. 
 
 > [!TIP]
 > **Client Accounts:** While you can use the credentials below, we encourage creating a new account via the [Registration Page](#) to test the full user journey.
 
+---
+
 ### **Physiotherapist Accounts (Staff Access)**
+
+---
+
 These accounts provide access to the **Physiotherapist Dashboard**, schedule management, and internal note-taking features.
 
 | Specialization | Username | Password |
@@ -448,9 +555,12 @@ The custom JavaScript used for the auto-dismissing alert messages was validated 
 | **Undefined Variables** | `bootstrap` (Expected as it is an external library loaded via CDN) |
 
  [<img src="docs/validation/js_val.png" width="900">](docs/validation/js_val.png)
+
 ---
 
 ### **Python (PEP8) Validation**
+
+---
 
 All custom Python logic across the project apps (`accounts`, `bookings`, `clinic`) has been validated against the [PEP8 Style Guide](https://peps.python.org/pep-0008/). 
 
@@ -470,9 +580,13 @@ To ensure high-quality, readable code, the following workflow was applied:
 The screenshot below confirms a "clean" run of the validation command, showing no PEP8 violations in the custom codebase.
 
 [<img src="docs/validation/python_pep8_pass.png" width="700">](docs/validation/python_pep8_pass.png)
+
 ---
 
 ### **Lighthouse Audit**
+
+---
+
 Lighthouse was used to test the performance, accessibility, best practices, and SEO of the application for both Desktop and Mobile users.
 
 | Page | Lighthouse (Desktop) | Lighthouse (Mobile) |
@@ -511,6 +625,8 @@ The WAVE (Web Accessibility Evaluation Tool) was used to ensure the application 
 
 ### **Detailed Accessibility Summary**
 
+---
+
 | Category | Status | Observations |
 |:---|:---:|:---|
 | **Errors** | **0** | No red accessibility errors were identified across audited pages. |
@@ -519,11 +635,13 @@ The WAVE (Web Accessibility Evaluation Tool) was used to ensure the application 
 | **Structural Elements** | **Verified** | Correct hierarchy of headings (H1-H3) and use of semantic HTML5 landmarks. |
 | **ARIA** | **Optimized** | ARIA roles and labels are used to enhance navigation for screen readers. |
 
-## **Manual Testing**
+### **Manual Testing**
+
+---
 
 To ensure the application is robust and secure, extensive manual testing was performed across all user roles. The testing focused on logical constraints, defensive design, and user feedback (Django Messages).
 
-### **1. Authentication & Access Control**
+#### **1. Authentication & Access Control**
 The system uses custom decorators and logic to ensure users only access what they are authorized to see.
 
 | Feature | Action | Expected Result | Actual Result | Status |
@@ -534,7 +652,7 @@ The system uses custom decorators and logic to ensure users only access what the
 | **Unauthorized Access**| Try to access Client Dashboard as a **Physio** | System returns `403 Forbidden` (Access denied) | As expected | **Pass** |
 | **Unauthenticated** | Try to access any dashboard without logging in | Redirected to Login page immediately | As expected | **Pass** |
 
-### **2. Patient (Client) Booking Flow**
+#### **2. Patient (Client) Booking Flow**
 Testing the "Happy Path" and edge cases for appointment management.
 
 | Feature | Action | Expected Result | Actual Result | Status |
@@ -545,7 +663,7 @@ Testing the "Happy Path" and edge cases for appointment management.
 | **Defensive Design** | Try to book a slot that has just passed | View filters out past slots automatically from the grid | As expected | **Pass** |
 | **Past Data Protection**| Try to cancel a past appointment (yesterday) | No "Cancel" option available for historical data | As expected | **Pass** |
 
-### **3. Staff (Physiotherapist) Management**
+#### **3. Staff (Physiotherapist) Management**
 Testing schedule control and data integrity for medical staff.
 
 | Feature | Action | Expected Result | Actual Result | Status |
@@ -621,43 +739,18 @@ During the development and testing phases, several bugs were identified and reso
 
 ---
 
-### **Known Bugs**
+### **Known Issues**
+
+---
 
 * **Overlapping Slots:** Currently, the system allows a physiotherapist to manually create overlapping time slots. A validation logic to check for time conflicts is planned for the next version.
 * **Browser Caching:** Due to aggressive static file caching, some layout changes might require a "Hard Refresh" (Ctrl+F5) to appear correctly for returning users.
 
----
 
-### Known Issues
-
-- No critical bugs detected at the time of submission.
-- Minor UI differences may occur on very small screen widths, but functionality remains unaffected.
-
-## **Credits**
-
-### **1. Content and Inspiration**
-* **Code Institute:** The overall structure and deployment process were guided by the principles taught in the **Full Stack Software Development** course.
-* **Django Documentation:** Used as a primary resource for implementing Class-Based Views, authentication decorators, and automated testing suites.
-* **WAVE Web Accessibility Evaluation Tool:** Essential for identifying and resolving accessibility and contrast issues to meet WCAG standards.
-
-### **2. Media and Design**
-* **Images:** All physiotherapist portraits and clinic imagery were generated using **Google Gemini (AI)** to create a unique and cohesive visual identity for the project.
-* **Icons:** Visual indicators and dashboard icons were implemented using **Bootstrap Icons** for a consistent and professional UI.
-* **Typography:** The project uses **Google Fonts**, specifically the 'Roboto' and 'Lato' families, to ensure readability across all devices.
-
-### **3. Technical Resources**
-* **Bootstrap 5:** The core front-end framework used for responsive layout, navigation components, and form styling.
-* **WhiteNoise:** Utilized for efficiently serving compressed static files (CSS/JS) in the production environment on Heroku.
-* **JSHint:** Used for validating custom JavaScript logic to ensure error-free code execution.
-
-### **4. Acknowledgments**
-* **Code Institute Tutor Support:** For their assistance during complex debugging sessions regarding database migrations and deployment.
-* **My Mentor:** For providing strategic feedback on the project's logic and the implementation of defensive design patterns.
-
-No real medical advice is provided by this application.
+No critical bugs detected at the time of submission.
+Minor UI differences may occur on very small screen widths, but functionality remains unaffected.
 
 ---
-
 ## **Deployment**
 
 The project was deployed to **Heroku** using the **Code Institute Postgres** database service. The following steps outline the process for both local and remote deployment.
@@ -723,38 +816,13 @@ Note: Physiotherapist profile images are stored in the /media/ directory. Ensure
 - **Static Files:** Managed by **WhiteNoise**. When DEBUG=False, WhiteNoise handles compression and caching for CSS and JS.
 - **Media Files:** Currently stored locally in the /media/ folder. Note that on Heroku's ephemeral file system, manually uploaded media files will not persist between restarts unless connected to an external cloud storage like Cloudinary.
 
+## Conclusion
 
+Physio Clinic stands as a robust example of a modern, accessible healthcare management tool designed with both the patient and the practitioner in mind. By integrating Agile methodologies and defensive design patterns, the project successfully bridges the gap between patient accessibility and clinical administrative efficiency.
 
+With a focus on high-quality code and user experience, the application achieves the following standards:
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-### Strengths of the Project
-
-- **Clear CRUD implementation**
-  - Clients can create, read, and delete bookings.
-  - Physiotherapists can update slot statuses, unblock slots, and manage schedules.
-  - Slot notes are properly handled and cleared when bookings are cancelled.
-
-- **Role-based user experience**
-  - Clients and physiotherapists have clearly separated dashboards.
-  - Access control is enforced both in views and UI navigation.
-
-- **User experience and validation**
-  - Booking past time slots is prevented.
-  - Booking without a required comment is blocked with user feedback.
-  - Visual status indicators (Available / Booked / Blocked) improve usability.
-
-- **Responsive and accessible design**
-  - The application adapts well across desktop, tablet, and mobile devices.
-  - Lighthouse scores above 90% demonstrate good performance, accessibility, and SEO practices.
+- Accessibility First: Verified with 0 WAVE errors and high Lighthouse scores (90+), ensuring the platform is usable for all patient demographics.
+- Technical Integrity: Built with 100% PEP8 compliance and a suite of automated tests to ensure long-term stability and security.
+- Role-Based Utility: Delivers a tailored experience through dedicated dashboards that empower specialists to manage their time while providing clients with a seamless booking journey.
+- This project serves as a comprehensive demonstration of full-stack development, moving from initial user-centric planning to a fully validated, production-ready healthcare solution.
