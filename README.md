@@ -545,9 +545,7 @@ The [W3C Jigsaw CSS Validation Service](https://jigsaw.w3.org/css-validator/) wa
 ---
 
 ### **JavaScript Validation (JSHint)**
-The custom JavaScript used for the auto-dismissing alert messages was validated using [JSHint](https://jshint.com/).
 
-### **JavaScript Validation (JSHint)**
 The custom JavaScript logic responsible for automatically dismissing alert messages is embedded directly within the `bookings/templates/bookings/schedule.html` file. 
 
 To ensure high code quality and compatibility, the script was validated using [JSHint](https://jshint.com/) with the following configurations:
