@@ -560,6 +560,46 @@ Testing schedule control and data integrity for medical staff.
 
 ---
 
+### **Automated Testing**
+
+Automated tests were implemented using the **Django Testing Framework** to ensure the reliability of the core booking logic and security constraints.
+
+#### **1. Areas of Testing**
+The test suite in `bookings/tests.py` focuses on:
+* **Model Integrity:** Validating the `BookingSlot` data structure and string outputs.
+* **Role-Based Access Control (RBAC):** Ensuring that clients cannot access physiotherapists' schedules and unauthorized users are redirected.
+* **Defensive Design:**
+    * Verifying that available slots can be successfully booked.
+    * Ensuring that slots in the past **cannot** be booked, even if a request is sent directly to the URL.
+* **Data Consistency:** Checking that `IntegrityError` is avoided by providing all required fields (like working hours) during profile creation.
+
+#### **2. Test Execution & Results**
+To run the tests, the following command was used:
+`python3 manage.py test bookings`
+
+**Results Summary:**
+| Test Method | Purpose | Result |
+|:---|:---|:---:|
+| `test_slot_model_creation` | Validates BookingSlot model structure | **Pass** |
+| `test_booking_home_access` | Verifies visibility of specialist list for clients | **Pass** |
+| `test_physio_dashboard_protection` | Confirms security of staff-only views | **Pass** |
+| `test_booking_process_success` | Validates end-to-end booking logic | **Pass** |
+| `test_prevent_booking_past_date` | Confirms protection against historical bookings | **Pass** |
+
+**Terminal Output Snapshot:**
+```text
+Found 5 test(s).
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 10.565s
+
+OK
+Destroying test database for alias 'default'...
+```
+---
+
 ## **Bugs**
 
 ### **Fixed Bugs**
