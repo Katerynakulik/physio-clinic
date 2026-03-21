@@ -633,78 +633,111 @@ During the development and testing phases, several bugs were identified and reso
 - No critical bugs detected at the time of submission.
 - Minor UI differences may occur on very small screen widths, but functionality remains unaffected.
 
-## Credits
+## **Credits**
 
-### Content
+### **1. Content and Inspiration**
+* **Code Institute:** The overall structure and deployment process were guided by the principles taught in the **Full Stack Software Development** course.
+* **Django Documentation:** Used as a primary resource for implementing Class-Based Views, authentication decorators, and automated testing suites.
+* **WAVE Web Accessibility Evaluation Tool:** Essential for identifying and resolving accessibility and contrast issues to meet WCAG standards.
 
-All textual content used in this project, including physiotherapist descriptions, short bios, and interface copy, was generated with the assistance of artificial intelligence (AI).  
-The content is fictional and intended solely for educational and demonstration purposes.
+### **2. Media and Design**
+* **Images:** All physiotherapist portraits and clinic imagery were generated using **Google Gemini (AI)** to create a unique and cohesive visual identity for the project.
+* **Icons:** Visual indicators and dashboard icons were implemented using **Bootstrap Icons** for a consistent and professional UI.
+* **Typography:** The project uses **Google Fonts**, specifically the 'Roboto' and 'Lato' families, to ensure readability across all devices.
 
-### Images
+### **3. Technical Resources**
+* **Bootstrap 5:** The core front-end framework used for responsive layout, navigation components, and form styling.
+* **WhiteNoise:** Utilized for efficiently serving compressed static files (CSS/JS) in the production environment on Heroku.
+* **JSHint:** Used for validating custom JavaScript logic to ensure error-free code execution.
 
-All images of physiotherapists displayed in this project were generated using artificial intelligence (AI).  
-These images do not represent real individuals. Any resemblance to real persons, living or deceased, is purely coincidental.
-
-The use of AI-generated images and content ensures that no real individuals are misrepresented and that no personal data is used without consent.
-
-### Ethical Considerations
-
-This project was developed as part of an educational portfolio.  
-To avoid misinformation and the misuse of real identities, all names, images, and professional descriptions are fictional and AI-generated.
+### **4. Acknowledgments**
+* **Code Institute Tutor Support:** For their assistance during complex debugging sessions regarding database migrations and deployment.
+* **My Mentor:** For providing strategic feedback on the project's logic and the implementation of defensive design patterns.
 
 No real medical advice is provided by this application.
 
 ---
 
-## Local Deployment
+## **Deployment**
 
-To run this project locally:
+The project was deployed to **Heroku** using the **Code Institute Postgres** database service. The following steps outline the process for both local and remote deployment.
 
-1. Clone the repository
+### **1. Heroku Deployment**
 
-```bash
-git clone https://github.com/Katerynakulik/physio-clinic.git
-cd physio-clinic
+This project is configured to run on Heroku with **WhiteNoise** for static file management and **Gunicorn** as the web server.
+
+#### **A. Environment Variables (Config Vars)**
+In the Heroku dashboard for your app, navigate to **Settings** > **Reveal Config Vars** and add the following:
+* `SECRET_KEY`: Your unique Django secret key.
+* `DATABASE_URL`: The URL provided by the Code Institute Postgres database.
+* `ALLOWED_HOSTS`: `.herokuapp.com` (or your specific app URL).
+* `DEBUG`: `False`.
+* `PYTHON_VERSION`: `3.12.x` (matching your local environment).
+
+#### **B. Project Configuration Files**
+Ensure the following files are present in the root directory:
+* **Procfile**: `web: gunicorn config.wsgi`
+* **requirements.txt**: Created via `pip3 freeze > requirements.txt` (ensure `whitenoise`, `gunicorn`, and `psycopg2-binary` are listed).
+* **runtime.txt**: (Optional but recommended) e.g., `python-3.12.2`.
+
+#### **C. Deployment Steps**
+1. **Login to Heroku CLI:** `heroku login`.
+2. **Add Remote:** `heroku git:remote -a your-app-name`.
+3. **Push to Heroku:** `git push heroku main`.
+4. **Run Migrations:** `heroku run python3 manage.py migrate`.
+
+---
+
+### **2. Local Deployment**
+
+To set up the project locally for development:
+
+#### **A. Clone and Environment**
+1. Clone the repository:
+   ```bash
+   git clone [https://github.com/your-username/physio-clinic.git](https://github.com/your-username/physio-clinic.git)
+   cd physio-clinic
+   ```
+2. Create a virtual environment and install dependencies:
 ```
-
-2. Create and activate a virtual environment
-
-```bash
 python3 -m venv venv
 source venv/bin/activate
+pip3 install -r requirements.txt
 ```
-
-3. Install dependencies
-
-```bash
-pip install -r requirements.txt
+#### **B. Local Configuration
+Create a .env file in the root directory:
 ```
-
-4. Create .env file based on .env.example, including:
-
-```bash
+SECRET_KEY=your_secret_key_here
 DEBUG=True
-SECRET_KEY=<your secret key>
 DATABASE_URL=sqlite:///db.sqlite3
 ```
+#### **C. Database & Media**
 
-5. Run migrations
+  1. Run migrations: python3 manage.py migrate.
+  2. Create a superuser: python3 manage.py createsuperuser.
+  3. Run the server: python3 manage.py runserver.
 
-```bash
-python3 manage.py migrate
-```
+Note: Physiotherapist profile images are stored in the /media/ directory. Ensure this folder exists locally for media uploads to work.
 
-6. Run development server
+### **3. Media and Static Files**
+- **Static Files:** Managed by **WhiteNoise**. When DEBUG=False, WhiteNoise handles compression and caching for CSS and JS.
+- **Media Files:** Currently stored locally in the /media/ folder. Note that on Heroku's ephemeral file system, manually uploaded media files will not persist between restarts unless connected to an external cloud storage like Cloudinary.
 
-```bash
-python3 manage.py runserver
-```
 
-7. Visit http://127.0.0.1:8000/ in your browser
 
-## Conclusion & Mentor Evaluation
 
-The **Physio Clinic** project successfully demonstrates a well-structured, full-stack Django application that meets the core requirements of a Full-Stack Toolkit portfolio project.
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### Strengths of the Project
 
