@@ -547,12 +547,17 @@ The [W3C Jigsaw CSS Validation Service](https://jigsaw.w3.org/css-validator/) wa
 ### **JavaScript Validation (JSHint)**
 The custom JavaScript used for the auto-dismissing alert messages was validated using [JSHint](https://jshint.com/).
 
-| Metric | Result |
-|:---|:---|
-| **ES Version** | ES6 (Directively enabled via `/* jshint esversion: 6 */`) |
-| **Errors** | 0 |
-| **Warnings** | 0 |
-| **Undefined Variables** | `bootstrap` (Expected as it is an external library loaded via CDN) |
+### **JavaScript Validation (JSHint)**
+The custom JavaScript logic responsible for automatically dismissing alert messages is embedded directly within the `bookings/templates/bookings/schedule.html` file. 
+
+To ensure high code quality and compatibility, the script was validated using [JSHint](https://jshint.com/) with the following configurations:
+* **ES Version:** ES6 compliance enabled via `/* jshint esversion: 6 */` to support `let` and arrow functions.
+* **Global Variables:** The `bootstrap` object is defined as a global variable via `/* global bootstrap */`, as it is provided by an external CDN in the base template.
+
+**Validation Results:**
+* **Errors:** 0
+* **Warnings:** 0
+* **Metrics:** The script successfully targets the `#messages-container`, waits for 10 seconds, and provides a smooth fade-out fallback if the Bootstrap library is not yet initialized.|
 
  [<img src="docs/validation/js_val.png" width="900">](docs/validation/js_val.png)
 

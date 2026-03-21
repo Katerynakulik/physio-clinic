@@ -55,22 +55,18 @@ class BookingSlotForm(forms.ModelForm):
         physio = self.physiotherapist
 
         if date and start_time:
-            # Отримуємо поточний локальний час
             now = timezone.localtime()
 
-            # Створюємо об'єкт datetime для слота, який намагаємось створити
             slot_datetime = timezone.make_aware(
                 datetime.combine(date, start_time)
             )
 
-            # 1. Перевірка: чи не в минулому цей час?
             if slot_datetime < now:
                 raise forms.ValidationError(
-                    "You cannot create a slot in the past. ",
+                    "You cannot create a slot in the past. "
                     "Please select a future time."
                 )
 
-            # 2. Перевірка: чи не існує вже такий слот (твій існуючий код)
             if physio:
                 exists = BookingSlot.objects.filter(
                     physiotherapist=physio,
@@ -80,7 +76,7 @@ class BookingSlotForm(forms.ModelForm):
 
                 if exists:
                     raise forms.ValidationError(
-                        "A slot for this date and time ",
+                        "A slot for this date and time "
                         "already exists in your schedule."
                     )
 
