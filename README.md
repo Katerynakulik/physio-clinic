@@ -132,6 +132,7 @@ The site is designed with a responsive layout, featuring a navigation bar for ea
 | **Physiotherapists Dashboard** | Overview hub for physiotherapists showing their daily stats. | [<img src="docs/screenshots/staff_dash_dsktp.png" width="180">](docs/screenshots/staff_dash_dsktp.png) | [<img src="docs/screenshots/staff_dash_tab.png" width="100">](docs/screenshots/staff_dash_tab.png) | [<img src="docs/screenshots/staff_dash_mob.png" width="60">](docs/screenshots/staff_dash_mob.png) |
 | **My Schedule** | Professional tool for staff to block slots, add notes, or cancel sessions. | [<img src="docs/screenshots/schedule_dsktp.png" width="180">](docs/screenshots/schedule_dsktp.png) | [<img src="docs/screenshots/schedule_tab.png" width="100">](docs/screenshots/schedule_tab.png) | [<img src="docs/screenshots/schedule_mob.png" width="60">](docs/screenshots/schedule_mob.png) |
 | **Create Slot** | Professional tool for staff to block slots, add notes, or cancel sessions. | [<img src="docs/screenshots/slot_dsktp.png" width="180">](docs/screenshots/slot_dsktp.png) | [<img src="docs/screenshots/slot_tab.png" width="100">](docs/screenshots/slot_tab.png) | [<img src="docs/screenshots/slot_mob.png" width="60">](docs/screenshots/slot_mob.png) |
+| **404 Page** | A 404 page appears when a page cannot be found.  | [<img src="docs/screenshots/404_dsktp.png" width="180">](docs/screenshots/404_dsktp.png) | [<img src="docs/screenshots/404_tab.png" width="100">](docs/screenshots/404_tab.png) | [<img src="docs/screenshots/404_mob.png" width="60">](docs/screenshots/404_mob.png) |
 
 #### Database
 
@@ -436,6 +437,19 @@ The [W3C Jigsaw CSS Validation Service](https://jigsaw.w3.org/css-validator/) wa
 
 ---
 
+### **JavaScript Validation (JSHint)**
+The custom JavaScript used for the auto-dismissing alert messages was validated using [JSHint](https://jshint.com/).
+
+| Metric | Result |
+|:---|:---|
+| **ES Version** | ES6 (Directively enabled via `/* jshint esversion: 6 */`) |
+| **Errors** | 0 |
+| **Warnings** | 0 |
+| **Undefined Variables** | `bootstrap` (Expected as it is an external library loaded via CDN) |
+
+ [<img src="docs/validation/js_val.png" width="900">](docs/validation/js_val.png)
+---
+
 ### **Python (PEP8) Validation**
 
 All custom Python logic across the project apps (`accounts`, `bookings`, `clinic`) has been validated against the [PEP8 Style Guide](https://peps.python.org/pep-0008/). 
@@ -472,6 +486,8 @@ Lighthouse was used to test the performance, accessibility, best practices, and 
 | **Create Slot** | [<img src="docs/validation/lh_slot_dsktp.png" width="200">](docs/validation/lh_slot_dsktp.png) | [<img src="docs/validation/lh_slot_mob.png" width="200">](docs/validation/lh_slot_mob.png) |
 | **Register** | [<img src="docs/validation/lh_registr_dsktp.png" width="200">](docs/validation/lh_registr_dsktp.png) | [<img src="docs/validation/lh_registr_mob.png" width="200">](docs/validation/lh_registr_mob.png) |
 | **Login** | [<img src="docs/validation/lh_login_dsktp.png" width="200">](docs/validation/lh_login_dsktp.png) | [<img src="docs/validation/lh_login_mob.png" width="200">](docs/validation/lh_login_mob.png) |
+| **404 Page** | [<img src="docs/validation/lh_404_dsktp.png" width="200">](docs/validation/lh_404_dsktp.png) | [<img src="docs/validation/lh_404_mob.png" width="200">](docs/validation/lh_404_mob.png) |
+
 
 ---
 
@@ -489,6 +505,7 @@ The WAVE (Web Accessibility Evaluation Tool) was used to ensure the application 
 | **Create slot** | [<img src="docs/validation/wave_slot_1.png" width="250">](docs/validation/wave_slot_1.png) [<img src="docs/validation/wave_slot_2.png" width="250">](docs/validation/wave_slot_2.png)|
 | **Register** | [<img src="docs/validation/wave_register_1.png" width="250">](docs/validation/wave_register_1.png) [<img src="docs/validation/wave_register_2.png" width="250">](docs/validation/wave_register_2.png)|
 | **Login** | [<img src="docs/validation/wave_login_1.png" width="250">](docs/validation/wave_login_1.png) [<img src="docs/validation/wave_login_2.png" width="250">](docs/validation/wave_login_2.png)|
+| **404 Page** | [<img src="docs/validation/wave_404_1.png" width="250">](docs/validation/wave_404_1.png) [<img src="docs/validation/wave_404_2.png" width="250">](docs/validation/wave_404_2.png)|
 
 ---
 
@@ -543,11 +560,31 @@ Testing schedule control and data integrity for medical staff.
 
 ---
 
-### **Bug Fixes during Development**
-* **Timezone Issue:** Initially, past slots were appearing in the booking grid. Fixed by implementing `timezone.localtime()` to ensure accurate "now" comparison for the clinic's location.
-* **Integrity Errors:** Multiple slots could be created for the same time. Fixed by adding `unique_together` constraint in the Model and a clean method in the Form to provide user-friendly error messages.
-* **Create slot:** When the app was first created, slots were generated automatically. Now you can create a slot if the selected time slot is available.
-* **Delete slot:** Initially, the slot could only be blocked. Now it can be deleted, even if it is blocked.
+## **Bugs**
+
+### **Fixed Bugs**
+
+During the development and testing phases, several bugs were identified and resolved. Special attention was given to Accessibility (WAVE) and Performance (Lighthouse) audits to ensure a professional user experience.
+
+| # | Bug Title | Issue Description | Resolution |
+|:---:|:---|:---|:---|
+| **1** | **Static Files 404** | CSS styles and physiotherapist images returned 404 errors on the local server. | Corrected `STATICFILES_DIRS` in `settings.py` and added `staticfiles_urlpatterns` to `urls.py` for local debugging. |
+| **2** | **Broken Profile Images** | Images didn't load because the template used a `slice` filter, looking for `A.webp` instead of `Anna.webp`. | Removed the `:slice` filter to ensure the filename matches the actual static asset name. |
+| **3** | **Missing Form Labels** | WAVE Audit flagged 138 errors where form inputs lacked a linked `<label>` tag. | Added `<label>` tags with unique `id` attributes and used the `visually-hidden` class for screen reader accessibility. |
+| **4** | **Orphaned Form Labels** | Labels existed but were not programmatically linked to their respective `textarea` or `input`. | Used the `for` attribute in labels to match the `id` of the input (e.g., `for="note-{{ slot.id }}"`). |
+| **5** | **Low Contrast Errors** | Action buttons (`btn-outline-danger`) had insufficient contrast against the light blue `table-info` background. | Switched to solid Bootstrap classes (`btn-danger`, `btn-warning`) to meet WCAG AA contrast standards. |
+| **6** | **Skipped Heading Levels** | Heading hierarchy jumped from `H1` to `H5`, confusing screen readers and search engines. | Realigned the hierarchy by changing `H5` to `H2`, maintaining the visual style via Bootstrap's `.h5` utility class. |
+| **7** | **Empty Buttons** | Buttons containing only FontAwesome icons lacked descriptive text for accessibility. | Added `<span class="visually-hidden">` text and `aria-label` attributes to provide context to screen readers. |
+| **8** | **Internal Server Error (500)** | The Schedule page crashed after an update to the table layout. | Identified a mismatch in column counts between `<thead>` and `<tbody>` and restored the missing "Time" column. |
+| **9** | **Redundant Links** | Adjacent elements (titles and buttons) were pointing to the same URL, causing navigation "noise". | Added unique `aria-label` context to buttons to differentiate their purpose from surrounding text. |
+| **10** | **Persistent Alerts** | Flash messages (success/error) remained on the screen indefinitely, obstructing the UI. | Implemented a JavaScript `setTimeout` function to automatically dismiss Bootstrap alerts after 15 seconds. |
+
+---
+
+### **Known Bugs**
+
+* **Overlapping Slots:** Currently, the system allows a physiotherapist to manually create overlapping time slots. A validation logic to check for time conflicts is planned for the next version.
+* **Browser Caching:** Due to aggressive static file caching, some layout changes might require a "Hard Refresh" (Ctrl+F5) to appear correctly for returning users.
 
 ---
 

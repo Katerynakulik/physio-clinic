@@ -49,53 +49,54 @@
         </td>
         <td>
           {% if slot.status == "booked" %}
-            {% if slot.client %}
-              <div><strong>{{ slot.client.get_full_name|default:slot.client.username }}</strong></div>
-            {% endif %}
-            {% if slot.client_note %}
-              <small class="text-dark"><em>Note: {{ slot.client_note }}</em></small>
-            {% endif %}
+          {% if slot.client %}
+          <div><strong>{{ slot.client.get_full_name|default:slot.client.username }}</strong></div>
+          {% endif %}
+          {% if slot.client_note %}
+          <small class="text-dark"><em>Note: {{ slot.client_note }}</em></small>
+          {% endif %}
           {% elif slot.status == "blocked" %}
-            <small class="text-dark">{{ slot.blocked_reason|default:"Blocked" }}</small>
+          <small class="text-dark">{{ slot.blocked_reason|default:"Blocked" }}</small>
           {% else %}
-            <span class="text-muted">—</span>
+          <span class="text-muted">—</span>
           {% endif %}
         </td>
         <td>
-  {% if slot.status == "available" %}
-  <form method="post" action="{% url 'block_slot' slot.id %}" class="d-flex gap-1">
-    {% csrf_token %}
-    <label for="reason-{{ slot.id }}" class="visually-hidden">Reason</label>
-    <input id="reason-{{ slot.id }}" name="blocked_reason" class="form-control form-control-sm" placeholder="Reason">
-    <button type="submit" class="btn btn-sm btn-warning" aria-label="Block slot">Block</button>
-  </form>
-  {% elif slot.status == "booked" %}
-  <form method="post" action="{% url 'cancel_booking_physio' slot.id %}"
-    onsubmit="return confirm('Are you sure?');" class="text-center">
-    {% csrf_token %}
-    {# Зменшили кнопку за допомогою w-75 (75%) або mx-auto для центрування #}
-    <button type="submit" class="btn btn-sm btn-danger w-75 mx-auto" aria-label="Cancel booking">
-      Cancel Booking
-    </button>
-  </form>
-  {% else %}
-  <span class="text-muted">—</span>
-  {% endif %}
-</td>
+          {% if slot.status == "available" %}
+          <form method="post" action="{% url 'block_slot' slot.id %}" class="d-flex gap-1">
+            {% csrf_token %}
+            <label for="reason-{{ slot.id }}" class="visually-hidden">Reason</label>
+            <input id="reason-{{ slot.id }}" name="blocked_reason" class="form-control form-control-sm"
+              placeholder="Reason">
+            <button type="submit" class="btn btn-sm btn-warning" aria-label="Block slot">Block</button>
+          </form>
+          {% elif slot.status == "booked" %}
+          <form method="post" action="{% url 'cancel_booking_physio' slot.id %}"
+            onsubmit="return confirm('Are you sure?');" class="text-center">
+            {% csrf_token %}
+            {# Зменшили кнопку за допомогою w-75 (75%) або mx-auto для центрування #}
+            <button type="submit" class="btn btn-sm btn-danger w-75 mx-auto" aria-label="Cancel booking">
+              Cancel Booking
+            </button>
+          </form>
+          {% else %}
+          <span class="text-muted">—</span>
+          {% endif %}
+        </td>
 
-<td>
-  {% if slot.status != "booked" %}
-  <a href="{% url 'delete_slot' slot.id %}" class="btn btn-sm btn-danger" aria-label="Delete slot">
-    <i class="fas fa-trash" aria-hidden="true"></i> Delete
-  </a>
-  {% else %}
-  {# ВИПРАВЛЕНО: додано прихований текст усередину disabled кнопки #}
-  <button class="btn btn-sm btn-secondary disabled" aria-disabled="true">
-    <i class="fas fa-trash" aria-hidden="true"></i>
-    <span class="visually-hidden">Delete disabled for booked slots</span>
-  </button>
-  {% endif %}
-</td>
+        <td>
+          {% if slot.status != "booked" %}
+          <a href="{% url 'delete_slot' slot.id %}" class="btn btn-sm btn-danger" aria-label="Delete slot">
+            <i class="fas fa-trash" aria-hidden="true"></i> Delete
+          </a>
+          {% else %}
+          {# ВИПРАВЛЕНО: додано прихований текст усередину disabled кнопки #}
+          <button class="btn btn-sm btn-secondary disabled" aria-disabled="true">
+            <i class="fas fa-trash" aria-hidden="true"></i>
+            <span class="visually-hidden">Delete disabled for booked slots</span>
+          </button>
+          {% endif %}
+        </td>
       </tr>
       {% empty %}
       <tr>
@@ -115,7 +116,7 @@
         try {
           let bsAlert = new bootstrap.Alert(alert);
           bsAlert.close();
-        } catch(e) {
+        } catch (e) {
           alert.style.display = 'none';
         }
       });
