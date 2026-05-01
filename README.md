@@ -485,7 +485,6 @@ These accounts provide access to the **Physiotherapist Dashboard**, schedule man
 
 | Specialization | Username | Password |
 | :--- | :--- | :--- |
-| **Superuser** | `Kateryna` | `23142314` |
 | **Orthopedic** | `lilia_kraft` | `VaDhLQ@Xx3DP3d@` |
 | **Neurological** | `anna_levski` | `2EhLA@vFJ77CqsL` |
 | **Geriatric** | `melissa_kel` | `6Gpy6pULUaSi@Ry` |
